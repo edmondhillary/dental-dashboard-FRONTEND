@@ -1,0 +1,51 @@
+.card-info-container{
+ 
+    display: flex;
+    justify-content: center;
+    align-items: left;
+    flex-direction: row;
+    width: 100%;
+    padding-bottom: 2rem;
+    // border-bottom: 1px solid gray;
+    text-align: left;
+}
+.left-avatar{
+ display: flex;
+ align-items: center;
+    width: 35%;
+ justify-content: center;
+
+}
+.right-info{
+   width: 55%;
+}
+.first-line {
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+}
+.second-line{
+    cursor: pointer;
+    text-align: left;
+    text-align: left;
+    display: flex;
+    justify-content:space-between;
+    padding: 0.5rem;
+
+    span{
+        font-size: 1.2rem;
+    }
+   
+}
+.third-line {
+    text-align: left;
+    display: flex;
+    justify-content:space-between;
+    padding: 0.5rem;
+    flex-direction: column;
+    div{
+
+        margin: 0.2rem;
+    }
+}

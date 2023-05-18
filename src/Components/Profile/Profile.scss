@@ -1,0 +1,45 @@
+.profile-container{
+    display: block;
+    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // flex-wrap: wrap;
+    margin: 10px;
+    overflow-y: scroll;
+
+}
+.card-title{
+    text-align: center;
+    background-color: rgba(211, 211, 211, 0);
+    border: 2px solid rgba(222, 210, 210, 0.837)
+}
+.card-container{
+
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+}
+:where(.css-dev-only-do-not-override-1me4733).ant-card .ant-card-head {
+border-bottom: 2px solid  rgba(222, 210, 210, 0.837)
+}
+:where(.css-dev-only-do-not-override-1me4733).ant-card {
+width: 600px;
+
+}
+.follows-container .followed-container .posts-container{
+    width: 800px;
+    text-align: left;
+}
+.title-edit-user{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.followers-list{
+    display: flex;
+    flex-direction: row;
+}

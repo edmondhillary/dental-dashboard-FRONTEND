@@ -1,0 +1,40 @@
+.ant-btn-primary {
+  background-color: #91b5b3;
+  // border-color: #2f9f97;
+  font-weight: 600;
+  letter-spacing: 0.2rem;
+  color: #ffffff;
+  &:hover {
+    background-color: #81aa8a98 !important;
+    border-color: #8d7538 !important;
+    // color: black !important;
+  }
+}
+
+.ant-input {
+  border-color: #8d7538;
+  color: rgb(101, 101, 101);
+  background-color: transparent;
+  &:hover {
+    // background-color: #89703074 !important;
+    border-color: #8d7538 !important;
+  }
+  &:active {
+    // background-color: #89703074 !important;
+    border-color: #8d7538 !important;
+  }
+  &:focus {
+    // background-color: #89703074 !important;
+    border-color: #8d7538 !important;
+  }
+}
+
+.ant-input::placeholder {
+  color: #5d5d5d;
+}
+.ant-input:hover,
+.ant-input:focus,
+.ant-input:active,
+.ant-input {
+  border-color: #89703074;
+}

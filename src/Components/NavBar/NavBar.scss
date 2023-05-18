@@ -1,0 +1,129 @@
+@import url(//fonts.googleapis.com/css?family=Monoton);
+@import url("https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@700&family=Noto+Sans+Mono:wght@200&family=PT+Sans&family=Roboto+Mono:wght@100;200&family=Roboto:ital,wght@0,100;1,100&family=Teko&family=Tilt+Neon&display=swap");
+
+.stickyButton:hover{
+    background-color: #91b5b3 !important;    
+    scale: 1.3;
+    border: 1px dashed;
+    cursor: pointer;
+    color: black !important;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: space-between;
+  gap: 30px;
+  
+
+  font-family: "Tilt Neon";
+  font-size: 15px;
+
+  .logo {
+    text-align: center;
+    width: 100%;
+    height: 50px;
+    user-select: none;
+    font: 400 4vh "Monoton";
+    cursor: pointer;
+   
+  }
+}
+
+.container-nav {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  div {
+    
+    display: flex;
+    align-items: center;
+    // padding-left: 5px;
+    width: 75%;
+    height: 45px;
+    transition: all 0.8s;
+    border-radius: 1rem;
+    font-size: 21px;
+    cursor: pointer;
+   
+    // margin-left: 0.8rem;
+    
+  }
+  
+  div.home:hover {
+    background-color: #9487b0
+    !important;
+  color: antiquewhite !important;
+  }
+  div.create:hover {
+           background-color: #9487b0
+    !important;
+  color: antiquewhite !important;
+   
+  }
+  div.logout:hover {
+           background-color: #9487b0
+    !important;
+  color: antiquewhite !important;
+   
+  }
+  div.profile:hover {
+           background-color: #9487b0
+    !important;
+  color: antiquewhite !important;
+   
+  }
+  div:hover .iconHome {
+    scale: 1.2;
+  }
+
+  div:hover .iconProfile {
+    scale: 1.2;
+  }
+
+  div:hover .iconCreate {
+    scale: 1.2;
+  }
+
+  div:hover .iconlogout {
+    scale: 1.2;
+  }
+
+  .iconHome,
+  .iconProfile,
+  .iconCreate,
+  .iconlogout {
+  cursor: pointer;
+
+    transition: all 0.5s;
+    color: #2c3c38;
+  }
+}
+
+.home,
+.profile,
+.create,
+.logout {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 25px;
+  color: #5a5a5acc;
+  
+}
+
+.navbar,
+.container-nav {
+  cursor: pointer !important;
+
+  & > * {
+    cursor: pointer !important;
+  }
+}
+:where(.css-dev-only-do-not-override-htwhyh).ant-drawer .ant-drawer-body {
+padding: 14px !important;
+overflow-y: hidden;
+}
