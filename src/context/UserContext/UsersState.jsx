@@ -2,7 +2,7 @@ import React, { createContext, useReducer } from 'react'
 import AppReducer from './UserReducer.js'
 import axios from 'axios'
 import { Modal } from 'antd';
-export const URL = 'http://localhost:4002'
+export const URL = 'https://dental-dashboard-backend-production.up.railway.app'
 const token = JSON.parse(localStorage.getItem("token"));
 const user = JSON.parse(localStorage.getItem('user'));
 

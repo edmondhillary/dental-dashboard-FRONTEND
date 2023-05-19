@@ -12,7 +12,7 @@ const GenderChart = () => {
       const token = JSON.parse(localStorage.getItem("token"));
       try {
         const response = await axios.get(
-          "http://localhost:4002/pacientes/pacientes/genderCount",
+          "https://dental-dashboard-backend-production.up.railway.app/pacientes/pacientes/genderCount",
           {
             headers: {
               Authorization: token

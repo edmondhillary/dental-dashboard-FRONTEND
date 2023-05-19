@@ -32,7 +32,7 @@ const VisitsByMonth = () => {
 
       for (let month = 1; month <= 12; month++) {
         const response = await axios.get(
-          `http://localhost:4002/pacientes/firstVisitCount/${year}/${month}`,
+          `https://dental-dashboard-backend-production.up.railway.app/pacientes/firstVisitCount/${year}/${month}`,
           {
             headers: {
               Authorization: token,

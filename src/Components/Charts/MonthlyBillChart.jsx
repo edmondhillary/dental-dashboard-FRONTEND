@@ -5,7 +5,7 @@ import axios from "axios";
 const { TabPane } = Tabs;
 
 const MonthlyPaymentsChart = () => {
-  const URL = "http://localhost:4002/presupuestos";
+  const URL = "https://dental-dashboard-backend-production.up.railway.app/presupuestos";
   const [monthlyPayments, setMonthlyPayments] = useState([]);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 

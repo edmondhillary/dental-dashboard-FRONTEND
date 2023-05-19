@@ -9,7 +9,7 @@
 
 //   const handleSearch = () => {
 //     const token = JSON.parse(localStorage.getItem('token'));
-//     axios.get(`http://localhost:4002/pacientes?displayName=${displayName}`, {
+//     axios.get(`https://dental-dashboard-backend-production.up.railway.app/pacientes?displayName=${displayName}`, {
 //       headers: {
 //         Authorization: token
 //       }

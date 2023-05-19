@@ -65,7 +65,7 @@ const CreateTreatmentModal = ({
   const fetchEmployees = async () => {
     const token = JSON.parse(localStorage.getItem("token"));
     try {
-      const response = await axios.get("http://localhost:4002/empleados", {
+      const response = await axios.get("https://dental-dashboard-backend-production.up.railway.app/empleados", {
         headers: {
           Authorization: token,
         },

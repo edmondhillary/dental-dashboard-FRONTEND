@@ -1,5 +1,5 @@
 import axios from 'axios';
-const URL = 'http://localhost:4002';
+const URL = 'https://dental-dashboard-backend-production.up.railway.app';
 
 export async function getEmployees(){
     const token = JSON.parse(localStorage.getItem('token'));

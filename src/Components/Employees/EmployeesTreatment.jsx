@@ -13,7 +13,7 @@ const EmployeeTreatmentsTable = ({ employeeId }) => {
         try {
           const token = JSON.parse(localStorage.getItem("token"));
           const response = await axios.get(
-            `http://localhost:4002/tratamientos/employees/${employeeId}/`,
+            `https://dental-dashboard-backend-production.up.railway.app/tratamientos/employees/${employeeId}/`,
             {
               headers: {
                 Authorization: token,

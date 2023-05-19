@@ -2,7 +2,7 @@ import React, { createContext, useReducer } from 'react'
 import PatientReducer from './PatientReducer.js'
 import axios from 'axios'
 
-export const URL = 'http://localhost:4002/pacientes'
+export const URL = 'https://dental-dashboard-backend-production.up.railway.app/pacientes'
 import { Modal } from 'antd';
 
 const initialState = {

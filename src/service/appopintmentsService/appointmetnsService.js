@@ -1,14 +1,14 @@
 import { Modal } from 'antd';
 import axios from 'axios';
 
-const URL = 'http://localhost:4002/citas'
+const URL = 'https://dental-dashboard-backend-production.up.railway.app'
 
 
 export const getAllAppointments = async () => {
     const token  = JSON.parse(localStorage.getItem('token'));
 
     try{
-        const response = await axios.get(`${URL}/citas/all`, {
+        const response = await axios.get(`${URL}/citas/citas/all`, {
             headers: {
                 Authorization: token
             }
@@ -26,7 +26,7 @@ export const getAppointmentsFromPatient = async (patientId) => {
     const token  = JSON.parse(localStorage.getItem('token'));
 
     try{
-        const response = await axios.get(`${URL}/pacientes/${patientId}/`, {
+        const response = await axios.get(`${URL}/citas/pacientes/${patientId}/`, {
             headers: {
                 Authorization: token
             }
@@ -43,7 +43,7 @@ export const getAppointmentsFromEmployee = async (employeeId) => {
     const token  = JSON.parse(localStorage.getItem('token'));
 
     try{
-        const response = await axios.get(`${URL}/empleados/${employeeId}/`, {
+        const response = await axios.get(`${URL}/citas/empleados/${employeeId}/`, {
             headers: {
                 Authorization: token
             }
@@ -61,7 +61,7 @@ export const createAppointment = async (appointment) => {
     const token  = JSON.parse(localStorage.getItem('token'));
 
     try{
-        const response = await axios.post(`${URL}/`, appointment, {
+        const response = await axios.post(`${URL}/citas`, appointment, {
             headers: {
                 Authorization: token
             }

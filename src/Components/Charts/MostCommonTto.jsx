@@ -11,7 +11,7 @@ const MostCommonTreatmentsChart = () => {
       const fetchData = async () => {
         try {
           const token = JSON.parse(localStorage.getItem("token"));
-          const response = await axios.get("http://localhost:4002/tratamientos/treatments/mostCommon", {
+          const response = await axios.get("https://dental-dashboard-backend-production.up.railway.app/tratamientos/treatments/mostCommon", {
             headers: {
               Authorization: token,
             },

@@ -45,7 +45,7 @@ const TableTreatments = ({
     const fetchEmployees = async () => {
       try {
         const token = JSON.parse(localStorage.getItem("token"));
-        const response = await axios.get("http://localhost:4002/empleados", {
+        const response = await axios.get("https://dental-dashboard-backend-production.up.railway.app/empleados", {
           headers: {
             Authorization: token,
           },
@@ -62,7 +62,7 @@ const TableTreatments = ({
       try {
         const token = JSON.parse(localStorage.getItem("token"));
         const response = await axios.get(
-          `http://localhost:4002/pacientes/${patientInfo?._id}`,
+          `https://dental-dashboard-backend-production.up.railway.app/pacientes/${patientInfo?._id}`,
           {
             headers: {
               Authorization: token,
@@ -108,7 +108,7 @@ const TableTreatments = ({
     try {
       const token = JSON.parse(localStorage.getItem("token"));
       const res = await axios.put(
-        `http://localhost:4002/tratamientos/${treatmentId}`,
+        `https://dental-dashboard-backend-production.up.railway.app/tratamientos/${treatmentId}`,
         {
           ...editableTreatment,
           ...updatedFields,
@@ -152,7 +152,7 @@ const TableTreatments = ({
     try {
       // Asegúrate de que la URL y los encabezados sean correctos
       const response = await axios.delete(
-        `http://localhost:4002/tratamientos/${id}`,
+        `https://dental-dashboard-backend-production.up.railway.app/tratamientos/${id}`,
         {
           headers: {
             Authorization: token,
@@ -394,7 +394,7 @@ const TableTreatments = ({
               try {
                 const token = JSON.parse(localStorage.getItem("token"));
                 const res = await axios.put(
-                  `http://localhost:4002/tratamientos/${editableTreatment?._id}`,
+                  `https://dental-dashboard-backend-production.up.railway.app/tratamientos/${editableTreatment?._id}`,
                   {
                     ...editableTreatment,
                   },

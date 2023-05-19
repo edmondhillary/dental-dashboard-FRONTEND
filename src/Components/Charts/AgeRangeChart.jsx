@@ -11,7 +11,7 @@ const AgeRangeChart = () => {
       const token = JSON.parse(localStorage.getItem("token"));
       try {
         const response = await axios.get(
-          "http://localhost:4002/pacientes/pacientes/ageRangeCount",
+          "https://dental-dashboard-backend-production.up.railway.app/pacientes/pacientes/ageRangeCount",
           {
             headers: {
               Authorization: token

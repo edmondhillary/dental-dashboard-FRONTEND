@@ -29,7 +29,7 @@ const PatientProfile = () => {
       try {
         setIsLoading(true);
         const res = await axios.get(
-          `http://localhost:4002/pacientes/${patientId}`,
+          `https://dental-dashboard-backend-production.up.railway.app/pacientes/${patientId}`,
           {
             headers: {
               Authorization: token,
@@ -63,7 +63,7 @@ const PatientProfile = () => {
   const handleCreateBudget = async (budgetData) => {
     const token = JSON.parse(localStorage.getItem("token"));
     const res = await axios.post(
-      `http://localhost:4002/presupuestos`,
+      `https://dental-dashboard-backend-production.up.railway.app/presupuestos`,
       budgetData,
       {
         headers: {

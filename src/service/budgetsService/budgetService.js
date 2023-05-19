@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:4002";
+const API_URL = "https://dental-dashboard-backend-production.up.railway.app";
 
 export const getBudgetsByPatient = async (patientId) => {
   const token = JSON.parse(localStorage.getItem("token"));

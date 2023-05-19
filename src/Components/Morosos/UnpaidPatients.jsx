@@ -11,7 +11,7 @@ const UnpaidPatientsTable = () => {
       try {
         const token = JSON.parse(localStorage.getItem("token"));
         const response = await axios.get(
-          "http://localhost:4002/presupuestos/patients/unpaid",
+          "https://dental-dashboard-backend-production.up.railway.app/presupuestos/patients/unpaid",
           {
             headers: {
               Authorization: token,

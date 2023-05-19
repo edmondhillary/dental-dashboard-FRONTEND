@@ -10,7 +10,7 @@ const Demographics = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4002/pacientes/pacientes/demographics", {
+        const response = await axios.get("https://dental-dashboard-backend-production.up.railway.app/pacientes/pacientes/demographics", {
           headers: {
            Authorization: token
           }

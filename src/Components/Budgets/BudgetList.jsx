@@ -80,7 +80,7 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
       const token = JSON.parse(localStorage.getItem("token"));
       const newPaid = checked ? costWithDiscount : 0;
       const response = await axios.put(
-        `http://localhost:4002/presupuestos/${budgetId}`,
+        `https://dental-dashboard-backend-production.up.railway.app/presupuestos/${budgetId}`,
         { isPaidCompleted: checked, paid: newPaid },
         {
           headers: {
@@ -111,7 +111,7 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
       const response = await axios.get(
-        `http://localhost:4002/tratamientos/budgets/filtros?patient=${patientData?._id}&completed=true&isAddedToBudget=false`,
+        `https://dental-dashboard-backend-production.up.railway.app/tratamientos/budgets/filtros?patient=${patientData?._id}&completed=true&isAddedToBudget=false`,
         {
           headers: {
             Authorization: token,
@@ -149,7 +149,7 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
       const response = await axios.put(
-        `http://localhost:4002/presupuestos/${editingBudget?._id}`,
+        `https://dental-dashboard-backend-production.up.railway.app/presupuestos/${editingBudget?._id}`,
         {
          ...editingBudget
         },
@@ -191,7 +191,7 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
     try {
       const token = JSON.parse(localStorage.getItem("token"));
       const response = await axios.delete(
-        `http://localhost:4002/presupuestos/${budgetId}`,
+        `https://dental-dashboard-backend-production.up.railway.app/presupuestos/${budgetId}`,
         {
           headers: {
             Authorization: token,

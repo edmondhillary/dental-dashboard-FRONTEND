@@ -29,7 +29,7 @@ const CitasChart = () => {
       const token = JSON.parse(localStorage.getItem("token"));
       try {
         const response = await axios.get(
-          `http://localhost:4002/citas/citas/count/${year}`,
+          `https://dental-dashboard-backend-production.up.railway.app/citas/citas/count/${year}`,
           {
             headers: {
               Authorization: token,

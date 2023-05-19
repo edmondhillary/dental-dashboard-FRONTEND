@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const URL = 'https://dental-dashboard-backend-production.up.railway.app'
+
 export const getPatients = async (firstName, lastName) => {
   const token = JSON.parse(localStorage.getItem('token'));
-  const res = await axios.get(`http://localhost:4002/pacientes?firstName=${firstName}&lastName=${lastName}`, {
+  const res = await axios.get(`${URL}/pacientes?firstName=${firstName}&lastName=${lastName}`, {
     headers: {
       Authorization: token,
     },
@@ -14,7 +16,7 @@ export const getPatients = async (firstName, lastName) => {
 
   export const createPatient = async (patient) => {
     const token = JSON.parse(localStorage.getItem('token'));
-    const res = await axios.post('http://localhost:4002/pacientes/', patient, {
+    const res = await axios.post(URL + '/pacientes/', patient, {
       headers: {
         Authorization: token
       }
@@ -23,7 +25,7 @@ export const getPatients = async (firstName, lastName) => {
   }
   export const getPatientById = (id)=>{
     const token = JSON.parse(localStorage.getItem('token'));
-    const res = axios.get(`http://localhost:4002/pacientes/${id}`, {
+    const res = axios.get(`${URL}/pacientes/${id}`, {
       headers: {
         Authorization: token
       }
@@ -33,7 +35,7 @@ export const getPatients = async (firstName, lastName) => {
   export const updatePatient = async (id, patient) => {
 
     const token = JSON.parse(localStorage.getItem('token'));
-    const res = await axios.put(`http://localhost:4002/pacientes/${id}`, patient, {
+    const res = await axios.put(`${URL}/pacientes/${id}`, patient, {
       headers: {
         Authorization: token
       }
@@ -42,7 +44,7 @@ export const getPatients = async (firstName, lastName) => {
   }
   export const searchByDisplayName = async (displayName) => {
     const token = JSON.parse(localStorage.getItem('token'));
-    const res = await axios.get(`http://localhost:4002/pacientes?displayName=${displayName}`, {
+    const res = await axios.get(`${URL}/pacientes?displayName=${displayName}`, {
       headers: {
         Authorization: token
       }

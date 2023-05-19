@@ -4,7 +4,7 @@ import treatmentReducer from './TreatmentReducer';
 
 
 
-export const URL = 'http://localhost:4002'
+export const URL = 'https://dental-dashboard-backend-production.up.railway.app'
 const initialState = {
   treatments: [],
   treatment: {},
