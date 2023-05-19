@@ -87,7 +87,9 @@ const AddPatient = () => {
               >
                 <Input />
               </Form.Item>
-              <Form.Item label='Correo electrónico' name='email'>
+              <Form.Item  rules={[
+                  { required: true, message: "Por favor, ingrese el email" },
+                ]} label='Correo electrónico' name='email'>
                 <Input />
               </Form.Item>
               <Form.Item

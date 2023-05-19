@@ -528,7 +528,7 @@ const Calendar = ({ userData, patientData, userType }) => {
                 </Select>
               </Form.Item>
             ) : (
-              <Form.Item rules={[{ required: true }]} label='ID del paciente'>
+              <Form.Item rules={[{ required: true , message: "Por favor, ingrese el paciente",}]} label='ID del paciente'>
                 {console.log({ formData })}
                 <Input
                   readOnly
@@ -538,7 +538,7 @@ const Calendar = ({ userData, patientData, userType }) => {
                 />
               </Form.Item>
             )}
-            <Form.Item label='Empleado'>
+            <Form.Item rules={[{ required: true , message: "Por favor, ingrese el EMPLEADO",}]} label='Empleado'>
               <Select
                 value={formData?.employee}
                 onChange={(value) =>
@@ -552,7 +552,7 @@ const Calendar = ({ userData, patientData, userType }) => {
                 ))}
               </Select>
             </Form.Item>
-            <Form.Item label='Fecha y hora de inicio'>
+            <Form.Item rules={[{ required: true , message: "Por favor, ingrese la hora de inicio",}]} label='Fecha y hora de inicio'>
               <DatePicker
                 showTime
                 format='YYYY-MM-DD HH:mm'
@@ -569,7 +569,7 @@ const Calendar = ({ userData, patientData, userType }) => {
                 locale={locale}
               />
             </Form.Item>
-            <Form.Item label='Fecha y hora de finalización'>
+            <Form.Item rules={[{ required: true , message: "Por favor, ingrese la hora de fin de cita",}]} label='Fecha y hora de finalización'>
               <DatePicker
                 showTime
                 format='YYYY-MM-DD HH:mm'

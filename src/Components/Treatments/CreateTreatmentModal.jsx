@@ -334,6 +334,11 @@ const CreateTreatmentModal = ({
 
             <Col xs={24} md={12}>
               <Form.Item
+               rules={[
+                { required: true ,
+                  message: "Por favor, indica si completaste el tratamiento",
+                }
+              ]}
                 label='¿Completado?'
                 name='completed'
                 labelCol={{ span: 12 }}
