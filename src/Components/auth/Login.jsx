@@ -13,8 +13,8 @@ const Login = () => {
 
   const handleLogin = async (values) => {
     await login(values);
-    await getUserInfo();
     setLoggedIn(true);
+    await getUserInfo();
   };
 
   useEffect(() => {
