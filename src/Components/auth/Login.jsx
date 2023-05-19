@@ -11,16 +11,12 @@ const Login = () => {
 
   const [loggedIn, setLoggedIn] = useState(false); // Agregar variable de estado
 
-  const handleLogin = async (values) => { // Hacer la función asíncrona
-    console.log(values);
-    await login(values); // Esperar a que se complete la función
-
-    getUserInfo(); // Obtener la información del usuario después de iniciar sesión
-
-    setLoggedIn(true); // Actualizar la variable de estado
-
-    // No redirigir aquí
+  const handleLogin = async (values) => {
+    await login(values);
+    await getUserInfo();
+    setLoggedIn(true);
   };
+  
   useEffect(() => {
     if (loggedIn) { // Redirigir solo si se ha iniciado sesión con éxito
       navigate('/profile/' + user?._id);
