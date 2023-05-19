@@ -22,7 +22,7 @@ export const NavBar = () => {
 
   const { reset, logOut, user } = useContext(GlobalContext);
   const navigate = useNavigate();
-  const isSuperAdmin = user?.role === "superAdmin";
+  const isSuperAdmin = user?.role === "superAdmin" || user?.role === "Super Admin";
   const isAdmin = user?.role === "admin";
 
   return (
@@ -146,7 +146,7 @@ export const NavBar = () => {
                 </>
               )}
               
-              { isAdmin && isSuperAdmin && (  <div
+              { isAdmin || isSuperAdmin && (  <div
                   className='logout'
                   onClick={() => {
                     setVisible(false);

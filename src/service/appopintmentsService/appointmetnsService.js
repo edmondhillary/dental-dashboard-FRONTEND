@@ -90,9 +90,13 @@ export const updateAppointment = async (id, appointment) => {
         console.log('soy el clg del service, response en ACTUALIZACION:', response.data);
         return response.data;
     }
-    catch(error){
-        console.log(error);
-    }
+    catch (error) {
+        const errorMessage = error.response?.data?.error || 'Error al crear la cita';
+        Modal.error({
+          title: 'Error',
+          content: errorMessage,
+        });
+      }
 
 }
 export const deleteAppointment = async (id) => {
@@ -107,8 +111,12 @@ export const deleteAppointment = async (id) => {
         console.log('soy el clg del service, response ELIMINADNO!', response.data);
         return response.data;
     }
-    catch(error){
-        console.log(error);
-    }
+    catch (error) {
+        const errorMessage = error.response?.data?.error || 'Error al crear la cita';
+        Modal.error({
+          title: 'Error',
+          content: errorMessage,
+        });
+      }
 
 }

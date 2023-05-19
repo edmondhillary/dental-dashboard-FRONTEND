@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from 'react'
 import AppReducer from './UserReducer.js'
 import axios from 'axios'
-
+import { Modal } from 'antd';
 export const URL = 'http://localhost:4002'
 const token = JSON.parse(localStorage.getItem("token"));
 const user = JSON.parse(localStorage.getItem('user'));
@@ -100,34 +100,53 @@ export const UsersProvider = ({ children }) => {
   };
   
 
-  const editUser = async (user, id) => {
-    const token = JSON.parse(localStorage.getItem('token'));
-    const res = await axios.put(URL + `/empleados/${id}`, user, {
-      headers: {
-        Authorization: token
-      }
-    });
-    dispatch({
-      type: 'EDIT_USER',
-      payload: res.data,
-    });
-    getUserInfo();
-    return res;
-  }
-  const deleteUser = async (id) => {
-    const token = JSON.parse(localStorage.getItem('token'));
-    const res = await axios.delete(URL + `/empleados/id/${id}`, {
-      headers: {
-        Authorization: token
-      }
-    });
-    dispatch({
-      type: 'DELETE_USER',
-      payload: res.data,
-    });
 
-    return res;
+  const deleteUser = async (id) => {
+    try {
+      const token = JSON.parse(localStorage.getItem('token'));
+      const res = await axios.delete(URL + `/empleados/id/${id}`, {
+        headers: {
+          Authorization: token
+        }
+      });
+      dispatch({
+        type: 'DELETE_USER',
+        payload: res.data,
+      });
+  
+      return res;
+    } catch (error) {
+      Modal.error({
+        title: 'Error',
+        content: 'Ha ocurrido un error al intentar borrar el usuario.',
+      });
+      console.error(error);
+    }
   }
+  
+  const editUser = async (user, id) => {
+    try {
+      const token = JSON.parse(localStorage.getItem('token'));
+      const res = await axios.put(URL + `/empleados/${id}`, user, {
+        headers: {
+          Authorization: token
+        }
+      });
+      dispatch({
+        type: 'EDIT_USER',
+        payload: res.data,
+      });
+      getUserInfo();
+      return res;
+    } catch (error) {
+      Modal.error({
+        title: 'Error',
+        content: 'Ha ocurrido un error al intentar editar el usuario.',
+      });
+      console.error(error);
+    }
+  }
+  
   const getEmployeeById = async (id) => {
   const token = JSON.parse(localStorage.getItem('token'));
   const res = await axios.get(URL + `/empleados/id/${id}`, {

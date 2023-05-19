@@ -3,6 +3,7 @@ import PatientReducer from './PatientReducer.js'
 import axios from 'axios'
 
 export const URL = 'http://localhost:4002/pacientes'
+import { Modal } from 'antd';
 
 const initialState = {
 
@@ -55,19 +56,28 @@ export const PatientsProvider = ({ children }) => {
 
     return res;
   }
-  const deletePatient = async (id) => {
-    const token = JSON.parse(localStorage.getItem('token'));
-    const res = await axios.delete(URL + `/${id}`, {
-      headers: {
-        Authorization: token
-      }
-    });
-    dispatch({
-      type: 'DELETE_PATIENT',
-      payload: res.data,
-    });
 
-    return res;
+  const deletePatient = async (id) => {
+    try {
+      const token = JSON.parse(localStorage.getItem('token'));
+      const res = await axios.delete(URL + `/${id}`, {
+        headers: {
+          Authorization: token
+        }
+      });
+      dispatch({
+        type: 'DELETE_PATIENT',
+        payload: res.data,
+      });
+  
+      return res;
+    }   catch (error) {
+      const errorMessage = error.response?.data?.error || 'Error al crear la cita';
+      Modal.error({
+        title: 'Error',
+        content: errorMessage,
+      });
+    }
   }
   const getPatientById = async (id) => {
   const token = JSON.parse(localStorage.getItem('token'));

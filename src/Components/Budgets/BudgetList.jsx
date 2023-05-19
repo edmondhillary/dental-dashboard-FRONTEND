@@ -169,8 +169,12 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
       );
       setBudgets(updatedBudgets);
       setModalVisible(false);
-    } catch (error) {
-      console.error(error);
+    }  catch (error) {
+      const errorMessage = error.response?.data?.error || 'Error al crear la cita';
+      Modal.error({
+        title: 'Error',
+        content: errorMessage,
+      });
     }
     setSortedInfo({});
   };
@@ -201,8 +205,12 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
         (budget) => budget._id !== budgetId
       );
       setBudgets(updatedBudgets);
-    } catch (error) {
-      console.error(error);
+    }  catch (error) {
+      const errorMessage = error.response?.data?.error || 'Error al crear la cita';
+      Modal.error({
+        title: 'Error',
+        content: errorMessage,
+      });
     }
     setSortedInfo({});
     setModalVisible(false);
