@@ -16,10 +16,10 @@ const Login = () => {
     await getUserInfo();
     setLoggedIn(true);
   };
-  
+
   useEffect(() => {
     if (loggedIn) { // Redirigir solo si se ha iniciado sesión con éxito
-      navigate('/profile/' + user?._id);
+      navigate('/empleados');
     }
   }, [loggedIn, user, navigate]);
 
