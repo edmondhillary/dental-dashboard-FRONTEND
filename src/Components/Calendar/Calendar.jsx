@@ -348,7 +348,7 @@ const Calendar = ({ userData, patientData, userType }) => {
     } catch (error) {
       console.log('holaaaaaa la conchaaaaaaaa auuuusussusususuussu maammamamaammam'); // Muestra el objeto de error completo en la consola
       if (error.response && error.response.data && error.response.data.error) {
-        Modal.info({
+        Modal.error({
           title: "ERROR: " + error.response.data.error,
           content:
             "Error al crear la cita, el empleado no puede tener dos citas al mismo tiempo",
