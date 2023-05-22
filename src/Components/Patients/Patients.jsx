@@ -1,9 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { getPatients } from "../../service/patientService/patientsService";
-
-
-
-import { Table , Input, Button} from "antd";
+import { Table, Input, Button, Skeleton } from "antd";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { PatientContext } from "../../context/PatientContext/PatientState";
@@ -16,15 +13,21 @@ const Patients = () => {
   const [patients, setPatients] = useState([]);
   const { patientId } = useParams();
   const [searchText, setSearchText] = useState("");
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getPatients("", searchText).then((res) => {
-      console.log("reeeeeeees REEEEEEEEEE", res);
-      setPatients(res);
-    });
+    setLoading(true);
+    getPatients("", searchText)
+      .then((res) => {
+        console.log("reeeeeeees REEEEEEEEEE", res);
+        setPatients(res);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
   }, [searchText]);
-
 
   const columns = [
     { title: "Nombre", dataIndex: "displayName" },
@@ -35,22 +38,39 @@ const Patients = () => {
 
   return (
     <div>
-      <Table
-        pagination={{ pageSize: 20 }}
-        style={{ margin: "2rem" }}
-        dataSource={patients}
-        columns={columns}
-        rowKey={(record) => record.id}
-        onRow={(record) => ({
-          onClick: () => {
-            console.log(`click en ${record.firstName}`);
-            // setSelectedEmployee(record);
-            navigate(`/pacientes/${record._id}`);
-          },
-          style: { cursor: "pointer" },
-        })}
-      />
-        
+      {loading ? (
+        <>
+        <div style={{ width: "100%", margin: "3rem" }}>
+          <Skeleton active />
+        <br />
+        <br />
+          <Skeleton active />      
+          <br />
+        <br />
+          <Skeleton active /> 
+          <br />
+        <br />
+          <Skeleton active />     
+        </div>
+
+        </>
+      ) : (
+        <Table
+          pagination={{ pageSize: 20 }}
+          style={{ margin: "2rem" }}
+          dataSource={patients}
+          columns={columns}
+          rowKey={(record) => record.id}
+          onRow={(record) => ({
+            onClick: () => {
+              console.log(`click en ${record.firstName}`);
+              // setSelectedEmployee(record);
+              navigate(`/pacientes/${record._id}`);
+            },
+            style: { cursor: "pointer" },
+          })}
+        />
+      )}
     </div>
   );
 };

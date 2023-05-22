@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Table, Switch } from "antd";
+import { Table, Switch, Spin } from "antd"; // Asegúrate de importar Spin
 import { Link } from "react-router-dom";
 import moment from "moment";
 
 const EmployeeTreatmentsTable = ({ employeeId }) => {
   const [treatments, setTreatments] = useState([]);
+  const [loading, setLoading] = useState(true); // Agrega un estado para controlar el loading
 
   useEffect(() => {
     const fetchEmployeeTreatments = async () => {
       if(employeeId) {
         try {
+          setLoading(true); // Muestra el spinner antes de hacer la petición
           const token = JSON.parse(localStorage.getItem("token"));
           const response = await axios.get(
             `https://dental-dashboard-backend-production.up.railway.app/tratamientos/employees/${employeeId}/`,
@@ -26,15 +28,16 @@ const EmployeeTreatmentsTable = ({ employeeId }) => {
             key: treatment._id + index, // Identificador único para cada tratamiento
           }));
           setTreatments(treatedData);
+          setLoading(false); // Oculta el spinner una vez los datos son obtenidos
         } catch (error) {
           console.error(error);
+          setLoading(false); // Oculta el spinner si ocurre un error
         }
       }
     };
 
     fetchEmployeeTreatments();
   }, [employeeId]);
-
   const columns = [
     {
       title: "Nombre del Paciente",
@@ -87,7 +90,15 @@ const EmployeeTreatmentsTable = ({ employeeId }) => {
   ];
   
   return (
-    <Table columns={columns} dataSource={treatments} />
+    <div>
+      {loading ? (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <Spin size="large" />
+        </div>
+      ) : (
+        <Table columns={columns} dataSource={treatments} />
+      )}
+    </div>
   );
 };
 

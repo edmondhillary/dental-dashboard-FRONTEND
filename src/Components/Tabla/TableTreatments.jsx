@@ -8,6 +8,7 @@ import {
   Select,
   Form,
   Card,
+  Spin,
 } from "antd";
 import Column from "antd/es/table/Column";
 import axios from "axios";
@@ -40,6 +41,7 @@ const TableTreatments = ({
   const [employees, setEmployees] = useState([]);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [currentTreatment, setCurrentTreatment] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -51,6 +53,7 @@ const TableTreatments = ({
           },
         });
         setEmployees(response?.data);
+
       } catch (error) {
         console.log(error);
       }
@@ -76,8 +79,10 @@ const TableTreatments = ({
           key: treatment._id ? treatment._id : index, // Usa el _id del tratamiento si existe, de lo contrario, usa el índice
         }));
         setTratamientos(treatedData);
+        setLoading(false);
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     }
   };
@@ -222,9 +227,11 @@ const TableTreatments = ({
     );
     
   }
+  
   return (
     <>
-      <Table
+  <Spin spinning={loading}>
+  <Table
         dataSource={tratamientos?.sort(sortTratamientos)}
         pagination={false}
         style={{ marginTop: "30px", margin: "3rem" }}
@@ -379,6 +386,7 @@ const TableTreatments = ({
           )}
         />
       </Table>
+  </Spin>
       <Modal
         title='Editar tratamiento'
         open={isModalVisibleEdit}

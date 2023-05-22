@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Table, Tag, Switch, Modal, InputNumber, Select, Button, Typography } from "antd";
+import { Table, Tag, Switch, Modal, InputNumber, Select, Button, Typography, Spin } from "antd";
 const { Text } = Typography;
 import { getBudgetsByPatient } from "../../service/budgetsService/budgetService";
 import { getBudgetsByEmployee } from "../../service/budgetsService/budgetService";
@@ -21,7 +21,7 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [discount, setDiscount] = useState(0);
   const [treatments, setTreatments] = useState([]);
-
+const [loading, setLoading] = useState(true)
   useEffect(() => {
     const loadBudgets = async () => {
       try {
@@ -38,8 +38,10 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );
         setBudgets(sortedBudgets);
+        setLoading(false)
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     };
 
@@ -353,6 +355,7 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
 
   return (
     <>
+      <Spin spinning={loading}>
       <Table
       style={{
         margin: '3rem'
@@ -396,6 +399,7 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
           );
         }}
       />
+      </Spin>
       <Modal
         title='Editar Presupuesto'
         open={modalVisible}

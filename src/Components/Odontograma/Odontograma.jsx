@@ -1,17 +1,17 @@
-import { Row, Col, Divider, Table, Tag } from "antd";
+import { Row, Col, Divider, Table, Tag, Skeleton, Spin } from "antd";
 import TableTreatments from "../Tabla/TableTreatments";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import CreateTreatmentModal from "../Treatments/CreateTreatmentModal";
 import { GlobalContext } from "../../context/UserContext/UsersState";
-import muela181716262728 from "../../assets/diente18ok.png"; //mueals 16/17/18 /26/27/28
-import muela1525 from "../../assets/muela15okok.png"; // muelas 15/25/ y del reves 44/45/34/35
-import diente1121 from "../../assets/diente11ok.png"; //dientes 11/21
-import muela1424 from "../../assets/muela14ok.png"; // muelas 14/24
-import diente1323 from "../../assets/diente13ok.png"; //dientes 13/23
-import muela484746363738 from "../../assets/muela48ok.png"; // muelas 46/47/48/ de lado contrario 36/37/38
-import diente4333 from "../../assets/diente43ok.png"; // deintes 43/33
-import diente42413132 from "../../assets/diente42ok.png"; // deintes 42/41/31/32
-import diente1222 from "../../assets/diente12ok.png"; //dientes 12/22
+import muela181716262728 from "../../assets/diente18ok.png";
+import muela1525 from "../../assets/muela15okok.png";
+import diente1121 from "../../assets/diente11ok.png";
+import muela1424 from "../../assets/muela14ok.png";
+import diente1323 from "../../assets/diente13ok.png";
+import muela484746363738 from "../../assets/muela48ok.png";
+import diente4333 from "../../assets/diente43ok.png";
+import diente42413132 from "../../assets/diente42ok.png";
+import diente1222 from "../../assets/diente12ok.png";
 import { useMediaQuery } from "react-responsive";
 
 function Odontograma({
@@ -23,7 +23,7 @@ function Odontograma({
   const { user, getUserInfo } = useContext(GlobalContext);
   const [selectedTooth, setSelectedTooth] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  
+  const [loading, setLoading] = useState(true);
 
   const toothImages = {
     18: { src: muela181716262728, rotate: false, mirror: false },
@@ -144,52 +144,61 @@ function Odontograma({
       </Col>
     );
   }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div style={{ margin: " 3rem" }}>
-      {/* <GlobalTreatments style="DIENTE NUMERO 0, EJEMPLO LIMPIEZA, BLANQUEMAINETO... ETC0"/> */}
-      <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
-        {row1.map(renderCol)}
-      </Row>
-      <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
-        {row2.map(renderCol)}
-      </Row>
-      {isMediumScreen && (
-        <>
-          <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
-            {row3.map(renderCol)}
-          </Row>
-          <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
-            {row4.map(renderCol)}
-          </Row>
-        </>
-      )}
-      {isSmallScreen && (
-        <>
-          <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
-            {row5.map(renderCol)}
-          </Row>
-          <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
-            {row6.map(renderCol)}
-          </Row>
-          <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
-            {row7.map(renderCol)}
-          </Row>
-          <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
-            {row8.map(renderCol)}
-          </Row>
-        </>
-      )}
-      <Divider />
+    <div style={{ margin: "3rem" }}>
+      <Spin  spinning={loading}>
+        <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
+          {row1.map(renderCol)}
+        </Row>
+        <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
+          {row2.map(renderCol)}
+        </Row>
+        {isMediumScreen && (
+          <>
+            <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
+              {row3.map(renderCol)}
+            </Row>
+            <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
+              {row4.map(renderCol)}
+            </Row>
+          </>
+        )}
+        {isSmallScreen && (
+          <>
+            <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
+              {row5.map(renderCol)}
+            </Row>
+            <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
+              {row6.map(renderCol)}
+            </Row>
+            <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
+              {row7.map(renderCol)}
+            </Row>
+            <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
+              {row8.map(renderCol)}
+            </Row>
+          </>
+        )}
+        <Divider />
 
-      <TableTreatments
-        createBudgetVisible={createBudgetVisible}
-        isModalVisible={isModalVisible}
-        patientInfo={patientInfo}
-        patientData={patientData}
-        setPatientData={setPatientData}
-        updatePatientData={setPatientData}
-      />
-
+        <TableTreatments
+          createBudgetVisible={createBudgetVisible}
+          isModalVisible={isModalVisible}
+          patientInfo={patientInfo}
+          patientData={patientData}
+          setPatientData={setPatientData}
+          updatePatientData={setPatientData}
+        />
+      </Spin>
       <CreateTreatmentModal
         patientData={patientData}
         setPatientData={setPatientData}
@@ -202,4 +211,5 @@ function Odontograma({
     </div>
   );
 }
+
 export default Odontograma;

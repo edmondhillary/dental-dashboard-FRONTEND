@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Table } from "antd";
+import { Table, Spin } from "antd";
 import { Link } from "react-router-dom";
 
 const EmployeePatientsTable = ({ employeeId }) => {
   const [patients, setPatients] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchEmployeePatients = async () => {
@@ -24,40 +25,44 @@ const EmployeePatientsTable = ({ employeeId }) => {
           key: patient._id + index, // Identificador único para cada paciente
         }));
         setPatients(treatedData);
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     };
 
     fetchEmployeePatients();
   }, [employeeId]);
-  
-    const columns = [
-      {
-        title: "Nombre",
-        dataIndex: "displayName",
-        key: "displayName",
-        render: (name, record) => {
-            console.log({record})
-            return (
-          <Link to={`/pacientes/${record?._id}`}>{name}</Link>
-        )},
+
+  const columns = [
+    {
+      title: "Nombre",
+      dataIndex: "displayName",
+      key: "displayName",
+      render: (name, record) => {
+        console.log({ record });
+        return <Link to={`/pacientes/${record?._id}`}>{name}</Link>;
       },
-      {
-        title: "Correo electrónico",
-        dataIndex: "email",
-        key: "email",
-      },
-      {
-        title: "Teléfono",
-        dataIndex: "phone",
-        key: "phone",
-      },
-      // Agrega más columnas según tus necesidades
-    ];
-  
-    return <Table columns={columns} dataSource={patients} />;
-  };
-  
-  export default EmployeePatientsTable;
-  
+    },
+    {
+      title: "Correo electrónico",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Teléfono",
+      dataIndex: "phone",
+      key: "phone",
+    },
+    // Agrega más columnas según tus necesidades
+  ];
+
+  return (
+    <Spin spinning={loading}>
+      <Table columns={columns} dataSource={patients} />
+    </Spin>
+  );
+};
+
+export default EmployeePatientsTable;

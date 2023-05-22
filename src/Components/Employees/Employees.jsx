@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Avatar, List, Table, Tag } from "antd";
+import { Avatar, List, Table, Tag, Spin, Skeleton } from "antd";
 import {
   getEmployeeByID,
   getEmployees,
@@ -17,10 +17,11 @@ function Employees() {
   const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [employeeDetails, setEmployeeDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     getEmployees().then((response) => {
       setEmployees(response);
-      console.log("hola", employees);
+      setLoading(false);
     });
   }, []);
 
@@ -48,24 +49,40 @@ function Employees() {
 
   return (
     <div>
-      <Table
-        pagination={{ pageSize: 8 }}
-        style={{ margin: "2rem", cursor: "pointer" }}
- 
-        dataSource={employees}
-        columns={columns}
-        rowKey={(record) => record.id}
-        onRow={(record) => ({
-          onClick: () => {
-            if (user?.role !== "Employee") {
-             
-              setSelectedEmployee(record);
-              navigate(`/profile/${record._id}`);
-            }
-          },
-       
-        })}
-      ></Table>
+      {loading ? (
+       <>
+       <div style={{ width: "100%", margin: "3rem" }}>
+         <Skeleton active />
+       <br />
+       <br />
+         <Skeleton active />      
+         <br />
+       <br />
+         <Skeleton active /> 
+         <br />
+       <br />
+         <Skeleton active />     
+       </div>
+
+       </>
+        
+      ) : (
+        <Table
+          pagination={{ pageSize: 8 }}
+          style={{ margin: "2rem", cursor: "pointer" }}
+          dataSource={employees}
+          columns={columns}
+          rowKey={(record) => record.id}
+          onRow={(record) => ({
+            onClick: () => {
+              if (user?.role !== "Employee") {
+                setSelectedEmployee(record);
+                navigate(`/profile/${record._id}`);
+              }
+            },
+          })}
+        ></Table>
+      )}
     </div>
   );
 }
