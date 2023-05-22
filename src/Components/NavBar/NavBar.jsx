@@ -164,7 +164,7 @@ export const NavBar = () => {
             <div
               className='logout'
               onClick={() => {
-                logOut(), navigate(`/profile/${user?._id}`);
+                logOut(), navigate(`/login`);
                 reset();
               }}
             >

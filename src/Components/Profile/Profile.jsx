@@ -26,7 +26,7 @@ useEffect(()=>{
       console.log('soy el user',user?._id)
       setLoading(true);
       if (!userId) return navigate('/profile/' + user?._id);
-      const response = await getEmployeeByID(userId);
+      const response = await getEmployeeByID(user?._id);
       if (!response) return navigate('/empleados');
       setUserData(response);
       setLoading(false);
@@ -39,7 +39,6 @@ useEffect(()=>{
       <Spin spinning={isLoading}>
         <div className='profile-container'>
           <UserCard />
-          {console.log(userData)}
           <Divider plain />
          <MyTabs/>
         </div>
