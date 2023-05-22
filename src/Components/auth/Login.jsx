@@ -14,12 +14,13 @@ const Login = () => {
   const handleLogin = async (values) => {
     await login(values);
     setLoggedIn(true);
-    await getUserInfo();
+    await getUserInfo(1,1,1,1);
   };
 
   useEffect(() => {
-    if (loggedIn) { // Redirigir solo si se ha iniciado sesión con éxito
-      navigate('/empleados');
+    if (loggedIn) { // Redirigir solo si se ha iniciado sesión con éxitoclg
+      console.log('navegandooooooooooooo al perfil!!!')
+      navigate(`/profile/${user?._id}`);
     }
   }, [loggedIn, user, navigate]);
 
