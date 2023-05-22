@@ -19,7 +19,7 @@ const GenderChart = () => {
             }
           }
         );
-        const genderData = response?.data.genderCount;
+        const genderData = response?.data?.genderCount;
         setData(genderData);
       } catch (error) {
         console.error(error);
@@ -60,7 +60,7 @@ backgroundColor: "transparent",
         </Pie>
         <Tooltip />
         <Legend 
-        formatter={(value) => value.toUpperCase()}
+        formatter={(value) => value?.toUpperCase()}
         iconType="square"
         wrapperStyle={{ marginRight: "3rem" }}
         />
