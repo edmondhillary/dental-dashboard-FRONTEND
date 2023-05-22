@@ -40,22 +40,22 @@ const VisitsByMonth = () => {
           }
         );
         const count = response?.data?.firstVisitCount || 0;
-        monthlyData.push({ month: monthNames[month - 1], count });
+        monthlyData?.push({ month: monthNames[month - 1], count });
       }
 
       // Rellenar meses faltantes con valor 0
       for (let month = 1; month <= 12; month++) {
-        if (!monthlyData.find((data) => data.month === monthNames[month - 1])) {
-          monthlyData.push({ month: monthNames[month - 1], count: 0 });
+        if (!monthlyData?.find((data) => data.month === monthNames[month - 1])) {
+          monthlyData?.push({ month: monthNames[month - 1], count: 0 });
         }
       }
 
       // Ordenar los datos por mes
-      monthlyData.sort((a, b) => a.month - b.month);
+      monthlyData?.sort((a, b) => a.month - b.month);
 
       setMonthlyData(monthlyData);
       setTotalYearData(
-        monthlyData.reduce((total, { count }) => total + count, 0)
+        monthlyData?.reduce((total, { count }) => total + count, 0)
       );
     } catch (error) {
       console.error(error);
