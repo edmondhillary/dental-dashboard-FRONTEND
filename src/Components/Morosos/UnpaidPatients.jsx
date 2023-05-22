@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Table } from "antd";
+import { Spin, Table } from "antd";
 import { Link } from "react-router-dom";
 
 const UnpaidPatientsTable = () => {
   const [patients, setPatients] = useState([]);
-
+    const [loading,setLoading] = useState(true);
   useEffect(() => {
     const fetchUnpaidPatients = async () => {
       try {
@@ -19,8 +19,10 @@ const UnpaidPatientsTable = () => {
           }
         );
         setPatients(response?.data);
+        setLoading(false)
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
     };
 
@@ -55,7 +57,10 @@ const UnpaidPatientsTable = () => {
   ];
 
   return (
-    <Table style={{ margin: "3rem" }} columns={columns} dataSource={patients} />
+    <Spin spinning={loading}>
+
+    <Table pagination={{ pageSize: 25 }} style={{ margin: "3rem" }} columns={columns} dataSource={patients} />
+    </Spin>
   );
 };
 
