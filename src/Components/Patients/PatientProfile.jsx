@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { PatientContext } from "../../context/PatientContext/PatientState";
-import { Button, Divider, Spin } from "antd";
+import { Button, Divider, Spin, Tooltip } from "antd";
 import PatientCard from "./PatientCard";
 import axios from "axios";
 import PatientsTabs from "./PatientsTabs";
@@ -94,16 +94,36 @@ const PatientProfile = () => {
           <PatientsTabs />
           {/* <Odontograma/> */}{" "}
           <>
-            <Button type='primary' onClick={showCreateBudgetModal}>
-              CREAR
-              
-       FACTURA
+          <Tooltip title='Crear Factura'>
+
+            <Button
+              type='primary'
+              onClick={showCreateBudgetModal}
+              style={{
+                width: "3rem",
+                height: "3rem",
+                position: "fixed",
+                right: "1rem",
+                bottom: "1rem",
+                borderRadius: '50%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                cursor: 'pointer',
+                
+              }}
+              >
+              <b style={{
+                fontSize: '2rem'
+              }}>&euro;</b>
+            
             </Button>
+            </Tooltip>
             <CreateBudget
               visible={createBudgetVisible}
               onCreate={handleCreateBudget}
               onCancel={handleCancel}
-            />
+              />
           </>
         </div>
       </Spin>
