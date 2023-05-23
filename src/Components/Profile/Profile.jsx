@@ -25,7 +25,7 @@ export const Profile = () => {
       console.log("soy el user", user?._id);
       setLoading(true);
       if (!userId) return navigate("/profile/" + user?._id);
-      const response = await getEmployeeByID(user?._id);
+      const response = await getEmployeeByID(userId);
       if (!response) return navigate("/empleados");
       setUserData(response);
       setLoading(false);

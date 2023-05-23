@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { getPatients } from "../../service/patientService/patientsService";
-import { Table, Input, Button, Skeleton } from "antd";
+import { Table, Input, Button, Skeleton, Tag } from "antd";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { PatientContext } from "../../context/PatientContext/PatientState";
@@ -30,42 +30,48 @@ const Patients = () => {
   }, [searchText]);
 
   const columns = [
-    { title: "Nombre", dataIndex: "displayName" },
-    { title: "Email", dataIndex: "email" },
-    { title: "Telefono", dataIndex: "phone" },
-    { title: "Direccion", dataIndex: "address" },
+    { title: "Nombre", dataIndex: "displayName" , color: "blue"},
+    { title: "Email", dataIndex: "email" , color: "blue"},
+    { title: "Telefono", dataIndex: "phone", color: "magenta" },
+    { title: "Direccion", dataIndex: "address" , color: "blue"},
   ];
 
   return (
     <div>
       {loading ? (
         <>
-        <div style={{ width: "100%", margin: "3rem" }}>
-          <Skeleton active />
-        <br />
-        <br />
-          <Skeleton active />      
-          <br />
-        <br />
-          <Skeleton active /> 
-          <br />
-        <br />
-          <Skeleton active />     
-        </div>
-
+          <div style={{ width: "100%", margin: "3rem" }}>
+            <Skeleton active />
+            <br />
+            <br />
+            <Skeleton active />      
+            <br />
+            <br />
+            <Skeleton active /> 
+            <br />
+            <br />
+            <Skeleton active />     
+          </div>
         </>
       ) : (
         <Table
           pagination={{ pageSize: 20 }}
           style={{ margin: "2rem" }}
           dataSource={patients}
-          columns={columns}
-          rowKey={(record) => record.id}
+          columns={columns?.map((column) => ({
+            ...column,
+            render: (text) => (
+              <span>
+                <Tag color={column?.color}>{text}</Tag>
+              </span>
+            ),
+          }))}
+          rowKey={(record) => record?.id}
           onRow={(record) => ({
             onClick: () => {
-              console.log(`click en ${record.firstName}`);
+              console.log(`click en ${record?.firstName}`);
               // setSelectedEmployee(record);
-              navigate(`/pacientes/${record._id}`);
+              navigate(`/pacientes/${record?._id}`);
             },
             style: { cursor: "pointer" },
           })}

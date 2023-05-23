@@ -77,7 +77,8 @@ function Employees() {
             onClick: () => {
               if (user?.role !== "Employee") {
                 setSelectedEmployee(record);
-                navigate(`/profile/${record._id}`);
+                console.log(record._id)
+                navigate(`/profile/${record?._id}`);
               }
             },
           })}

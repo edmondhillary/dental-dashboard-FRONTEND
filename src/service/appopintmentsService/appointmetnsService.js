@@ -31,8 +31,8 @@ export const getAppointmentsFromPatient = async (patientId) => {
                 Authorization: token
             }
         })
-        console.log('soy el clg del service paciente, response', response.data);
-        return response.data.consultas;
+        console.log('soy el clg del service paciente, response', response?.data);
+        return response?.data?.consultas;
     }
     catch(error){
         console.log(error);
@@ -82,7 +82,7 @@ export const updateAppointment = async (id, appointment) => {
     const token  = JSON.parse(localStorage.getItem('token'));
 
     try{
-        const response = await axios.put(`${URL}/${id}`, appointment, {
+        const response = await axios.put(`${URL}/citas/${id}`, appointment, {
             headers: {
                 Authorization: token
             }
@@ -103,13 +103,13 @@ export const deleteAppointment = async (id) => {
     const token  = JSON.parse(localStorage.getItem('token'));
 
     try{
-        const response = await axios.delete(`${URL}/${id}`, {
+        const response = await axios.delete(`${URL}/citas/${id}`, {
             headers: {
                 Authorization: token
             }
         })
-        console.log('soy el clg del service, response ELIMINADNO!', response.data);
-        return response.data;
+        console.log('soy el clg del service, response ELIMINADNO!', response?.data);
+        return response?.data;
     }
     catch (error) {
         const errorMessage = error.response?.data?.error || 'Error al crear la cita';

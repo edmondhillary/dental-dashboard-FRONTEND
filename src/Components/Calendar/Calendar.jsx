@@ -148,7 +148,7 @@ const Calendar = ({ userData, patientData, userType }) => {
   const handleEditAppointment = async (appointmentId, updatedAppointment) => {
     console.log({ updatedAppointment });
     await updateAppointment(appointmentId, updatedAppointment);
-    if (userType === "patient") {
+    if (userType === "patient" ) {
       const updatedAppointments = await getAppointmentsFromPatient(
         patientData?._id
       );
