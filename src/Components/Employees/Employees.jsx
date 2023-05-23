@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Avatar, List, Table, Tag, Spin, Skeleton } from "antd";
+import { Avatar, List, Table, Tag, Spin, Skeleton, Typography } from "antd";
 import {
   getEmployeeByID,
   getEmployees,
@@ -9,7 +9,7 @@ import EmployeeCard from "../EmployeeCard/EmployeeCard";
 import { UserCard } from "../Profile/components/UserCard/UserCard";
 import Column from "antd/es/table/Column";
 import { GlobalContext } from "../../context/UserContext/UsersState";
-
+const { Title } = Typography;
 function Employees() {
   const navigate = useNavigate();
   const { user } = useContext(GlobalContext);
@@ -66,8 +66,10 @@ function Employees() {
 
        </>
         
-      ) : (
+      ) : (<>
+     <Title level={3} style={{ textAlign: "center" }}>Lista de Empleados</Title>
         <Table
+        
           pagination={{ pageSize: 8 }}
           style={{ margin: "2rem", cursor: "pointer" }}
           dataSource={employees}
@@ -82,7 +84,8 @@ function Employees() {
               }
             },
           })}
-        ></Table>
+          ></Table>
+          </>
       )}
     </div>
   );
