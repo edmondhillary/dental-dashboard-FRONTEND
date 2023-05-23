@@ -16,17 +16,18 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 // import SizeContext from "antd/es/config-provider/SizeContext";
 import { GlobalContext } from "../../context/UserContext/UsersState";
-
+import imgLogo from "../../../src/assets/LOGOCODIGOPNG.png";
 export const NavBar = () => {
   const [visible, setVisible] = useState(false);
 
   const { reset, logOut, user } = useContext(GlobalContext);
   const navigate = useNavigate();
-  const isSuperAdmin = user?.role === "superAdmin" || user?.role === "Super Admin";
+  const isSuperAdmin =
+    user?.role === "superAdmin" || user?.role === "Super Admin";
   const isAdmin = user?.role === "admin";
 
   return (
-    <>
+    <div>
       <Button
         className='stickyButton'
         type='secondary'
@@ -50,7 +51,20 @@ export const NavBar = () => {
         <MenuOutlined style={{ color: "white", fontWeight: "700" }} />
       </Button>
       <Drawer
-        title={`Clinica Dental Lorenzo Gonzalez `}
+        title={
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "row",
+            }}
+          >
+            <p style={{color: '#829DCB'}}>{"     Clinica Dental Lorenzo Gonzalez "}</p>
+            <img src={imgLogo} alt='logo' style={{position: 'fixed', width: "15%", left: '10rem' }} />
+          </div>
+        }
         style={{ background: "#fff", cursor: "pointer" }}
         placement='left'
         onClose={() => setVisible(false)}
@@ -120,7 +134,7 @@ export const NavBar = () => {
               <MedicineBoxOutlined className='iconlogout' />{" "}
               <div className='divLogout'>Tratamientos</div>
             </div>
-            { isSuperAdmin && (
+            {isSuperAdmin && (
               <>
                 <div
                   className='logout'
@@ -143,10 +157,12 @@ export const NavBar = () => {
                   <BarChartOutlined className='iconlogout' />{" "}
                   <div className='divLogout'>Graficas</div>
                 </div>
-                </>
-              )}
-              
-              { isAdmin || isSuperAdmin && (  <div
+              </>
+            )}
+
+            {isAdmin ||
+              (isSuperAdmin && (
+                <div
                   className='logout'
                   onClick={() => {
                     setVisible(false);
@@ -160,7 +176,8 @@ export const NavBar = () => {
                   <div className='divLogout' style={{ color: "tomato" }}>
                     Morosos
                   </div>
-                </div>)}
+                </div>
+              ))}
             <div
               className='logout'
               onClick={() => {
@@ -174,6 +191,6 @@ export const NavBar = () => {
           </div>
         </div>
       </Drawer>
-    </>
+    </div>
   );
 };

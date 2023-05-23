@@ -1,4 +1,14 @@
-import { Row, Col, Divider, Table, Tag, Skeleton, Spin } from "antd";
+import {
+  Row,
+  Col,
+  Divider,
+  Table,
+  Tag,
+  Skeleton,
+  Spin,
+  Checkbox,
+  Button,
+} from "antd";
 import TableTreatments from "../Tabla/TableTreatments";
 import { useContext, useState, useEffect } from "react";
 import CreateTreatmentModal from "../Treatments/CreateTreatmentModal";
@@ -59,11 +69,6 @@ function Odontograma({
     33: { src: diente4333, rotate: false, mirror: true },
     32: { src: diente42413132, rotate: false, mirror: true },
     31: { src: diente42413132, rotate: false, mirror: true },
-  };
-
-  const handleCreateTreatment = (values) => {
-    // onCreate(values);
-    setIsModalVisible(false);
   };
 
   const handleCloseModal = () => {
@@ -152,10 +157,14 @@ function Odontograma({
 
     return () => clearTimeout(timer);
   }, []);
+  const handleClickCheckbox = (event) => {
+    setSelectedTooth(0);
+    setIsModalVisible(true);
+  };
 
   return (
     <div style={{ margin: "3rem" }}>
-      <Spin  spinning={loading}>
+      <Spin spinning={loading}>
         <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
           {row1.map(renderCol)}
         </Row>
@@ -188,6 +197,24 @@ function Odontograma({
             </Row>
           </>
         )}
+        <Divider />
+
+        <div
+          style={{
+            padding: "1rem",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Button
+            type='secondary'
+            onClick={handleClickCheckbox}
+            style={{ border: "2px dashed lightblue" }}
+          >
+            TRATAMIENTO PARA TODA LA BOCA
+          </Button>
+        </div>
         <Divider />
 
         <TableTreatments

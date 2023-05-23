@@ -127,3 +127,12 @@
 padding: 14px !important;
 overflow-y: hidden;
 }
+.navbar-background {
+  width: 100%;
+  height: 100%;
+  background-image: url('../../../src/assets/LOGOCODIGOPNG.png');
+  background-repeat: no-repeat;
+  background-position: right top;  // Puedes ajustar esto a donde quieras que aparezca la imagen.
+  // background-size: 100;  // Ajusta esto al tamaño que necesites.
+  opacity: 0.5;  // Ajusta esto al nivel de transparencia que necesites.
+}

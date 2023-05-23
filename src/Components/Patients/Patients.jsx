@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { getPatients } from "../../service/patientService/patientsService";
-import { Table, Input, Button, Skeleton, Tag } from "antd";
+import { Table, Input, Button, Skeleton, Tag, Typography } from "antd";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { PatientContext } from "../../context/PatientContext/PatientState";
 
 const { Search } = Input;
-
+const { Title } = Typography;
 const Patients = () => {
   const navigate = useNavigate();
   const { patient } = useContext(PatientContext);
@@ -54,6 +54,8 @@ const Patients = () => {
           </div>
         </>
       ) : (
+        <>
+         <Title level={3} style={{ textAlign: "center" }}>Lista de Pacientes</Title>
         <Table
           pagination={{ pageSize: 20 }}
           style={{ margin: "2rem" }}
@@ -75,7 +77,8 @@ const Patients = () => {
             },
             style: { cursor: "pointer" },
           })}
-        />
+          />
+      </>
       )}
     </div>
   );
