@@ -27,19 +27,20 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
       try {
         let response;
         if (isPatient) {
-           response = await getBudgetsByPatient(id, pageNumber);
+          response = await getBudgetsByPatient(id, pageNumber);
         } else {
           if (id) {
-           response = await getBudgetsByEmployee(id, pageNumber);
+            response = await getBudgetsByEmployee(id, pageNumber);
           }
         }
         console.log(response);
         const sortedBudgets = response?.budgets?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
-        );
-        setBudgets(sortedBudgets);
-        console.log(response?.totalPages )
-        setTotal(response?.totalPages );
+          );
+          setBudgets(sortedBudgets);
+          console.log(response?.totalPages )
+          
+          setTotal(response?.totalPages );
 
         setLoading(false)
       } catch (error) {
@@ -186,7 +187,7 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
 
   const handleDeleteBudget = (budgetId) => {
     Modal.confirm({
-      title: "¿Está seguro de que desea eliminar este presupuesto?",
+      title: "¿Está seguro de que desea eliminar esta factura? ¡No se puede revocar esta accion! ",
       onOk() {
         deleteBudget(budgetId);
       },
@@ -405,7 +406,7 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
        <Pagination
         style={{ textAlign: 'right', marginTop: '1rem' }}
         current={pageNumber}
-        total={total * 15}
+        total={budgets?.length}
         pageSize={15}
         onChange={(page) => setPageNumber(page)}
       />

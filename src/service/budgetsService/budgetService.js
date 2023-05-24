@@ -2,9 +2,9 @@ import axios from "axios";
 
 const API_URL = "https://dental-dashboard-backend-production.up.railway.app";
 
-export const getBudgetsByPatient = async (patientId) => {
+export const getBudgetsByPatient = async (patientId, pageNumber) => {
   const token = JSON.parse(localStorage.getItem("token"));
-  const response = await axios.get(`${API_URL}/presupuestos/paciente/${patientId}`, {
+  const response = await axios.get(`${API_URL}/presupuestos/paciente/${patientId}?page=${pageNumber}`, {
     headers: {
       Authorization: token,
     },
