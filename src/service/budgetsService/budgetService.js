@@ -13,9 +13,9 @@ export const getBudgetsByPatient = async (patientId) => {
   return response.data;
 };
 
-export const getBudgetsByEmployee = async (employeeId) => {
+export const getBudgetsByEmployee = async (employeeId, pageNumber) => {
     const token = JSON.parse(localStorage.getItem("token"));
-    const response = await axios.get(`${API_URL}/presupuestos/empleado/${employeeId}`, {
+    const response = await axios.get(`${API_URL}/presupuestos/empleado/${employeeId}?page=${pageNumber}`, {
       headers: {
         Authorization: token,
       },

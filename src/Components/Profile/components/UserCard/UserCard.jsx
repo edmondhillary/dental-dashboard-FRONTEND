@@ -25,7 +25,7 @@ console.log(user
           <Avatar style={{
             backgroundSize: "cover",
             
-          }} size={190} src={userData?.avatar ? userData?.avatar : "https://i.pinimg.com/736x/5"
+          }} size={190} src={userData?.avatar ? userData?.avatar : "https://images.squarespace-cdn.com/content/v1/54b7b93ce4b0a3e130d5d232/1519987020970-8IQ7F6Z61LLBCX85A65S/icon.png?format=1000w"
           } />
         </Col>
         <Col xs={22} lg={14} className='right-info'>

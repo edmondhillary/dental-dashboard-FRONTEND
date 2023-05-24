@@ -1,17 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Table, Tag, Switch, Modal, InputNumber, Select, Button, Typography, Spin } from "antd";
-const { Text } = Typography;
+import { Table, Tag, Switch, Modal, InputNumber, Select, Button, Typography, Spin, Pagination } from "antd";
 import { getBudgetsByPatient } from "../../service/budgetsService/budgetService";
 import { getBudgetsByEmployee } from "../../service/budgetsService/budgetService";
 import { Link } from "react-router-dom";
-import {
-  CheckCircleOutlined,
-  CloseCircleOutlined,
-  DeleteOutlined,
-  EditOutlined,
-} from "@ant-design/icons";
+import { CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { GlobalContext } from "../../context/UserContext/UsersState";
+
+const { Text } = Typography;
 
 const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
   const { user } = useContext(GlobalContext);
@@ -21,16 +17,20 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [discount, setDiscount] = useState(0);
   const [treatments, setTreatments] = useState([]);
-const [loading, setLoading] = useState(true)
+  
+  const [loading, setLoading] = useState(true);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [total, setTotal] = useState(0);
+
   useEffect(() => {
     const loadBudgets = async () => {
       try {
         let response;
         if (isPatient) {
-          response = await getBudgetsByPatient(id);
+           response = await getBudgetsByPatient(id, pageNumber);
         } else {
           if (id) {
-            response = await getBudgetsByEmployee(id);
+           response = await getBudgetsByEmployee(id, pageNumber);
           }
         }
         console.log(response);
@@ -38,6 +38,9 @@ const [loading, setLoading] = useState(true)
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
         );
         setBudgets(sortedBudgets);
+        console.log(response?.totalPages )
+        setTotal(response?.totalPages );
+
         setLoading(false)
       } catch (error) {
         console.error(error);
@@ -46,7 +49,7 @@ const [loading, setLoading] = useState(true)
     };
 
     loadBudgets();
-  }, [id, isPatient, patientData, modalVisible]);
+  }, [id, isPatient, patientData, modalVisible, pageNumber]);
 
   const handleChange = (pagination, filters, sorter) => {
     setSortedInfo(sorter);
@@ -360,7 +363,7 @@ const [loading, setLoading] = useState(true)
       style={{
         margin: '3rem'
       }}
-        pagination={{ pageSize: 50 }}
+        pagination={false}
         columns={columns}
         dataSource={budgets}
         onChange={handleChange}
@@ -372,7 +375,7 @@ const [loading, setLoading] = useState(true)
           let totalPaid = 0;
           let totalDebt = 0;
   
-          pageData.forEach(({ borrow, repayment, costWithDiscount, paid }) => {
+          pageData?.forEach(({ borrow, repayment, costWithDiscount, paid }) => {
             
             totalCostWithDiscount += costWithDiscount;
             totalPaid += paid;
@@ -398,6 +401,13 @@ const [loading, setLoading] = useState(true)
             </>
           );
         }}
+      />
+       <Pagination
+        style={{ textAlign: 'right', marginTop: '1rem' }}
+        current={pageNumber}
+        total={total * 15}
+        pageSize={15}
+        onChange={(page) => setPageNumber(page)}
       />
       </Spin>
       <Modal
