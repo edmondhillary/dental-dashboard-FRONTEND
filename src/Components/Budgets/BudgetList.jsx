@@ -33,7 +33,7 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
             response = await getBudgetsByEmployee(id, pageNumber);
           }
         }
-        console.log(response);
+        console.log('soy la PETICIOOOOON!!!');
         const sortedBudgets = response?.budgets?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
           );
