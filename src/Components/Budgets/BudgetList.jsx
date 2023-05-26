@@ -403,10 +403,11 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
           );
         }}
       />
+      {console.log({total})}
        <Pagination
         style={{ textAlign: 'right', marginTop: '1rem' }}
         current={pageNumber}
-        total={budgets?.length}
+        total={total * 15}
         pageSize={15}
         onChange={(page) => setPageNumber(page)}
       />
