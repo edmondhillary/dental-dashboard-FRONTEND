@@ -203,15 +203,15 @@ const TableTreatments = ({
     return (
       <>
         {tratamientos?.sort(sortTratamientos).map((tratamiento) => (
-          <Card title={tratamiento.teeth} key={tratamiento._id}>
+          <Card title={tratamiento?.teeth} key={tratamiento?._id}>
             {/* Aquí puedes colocar el contenido de cada tarjeta */}
-            <p>Tratamiento: {tratamiento.type}</p>
-            <p>Empleado: {tratamiento.employee.firstName} {tratamiento.employee.lastName}</p>
-            <p>Completado: {tratamiento.completed ? "Sí" : "No"}</p>
-            <p>Fecha de Creación: {new Date(tratamiento.createdAt).toLocaleDateString("es-ES")}</p>
-            <p>¿Está facturado?: {tratamiento.isAddedToBudget ? "Sí" : "No"}</p>
+            <p>Tratamiento: {tratamiento?.type}</p>
+            <p>Empleado: {tratamiento?.employee?.firstName} {tratamiento?.employee.lastName}</p>
+            <p>Completado: {tratamiento?.completed ? "Sí" : "No"}</p>
+            <p>Fecha de Creación: {new Date(tratamiento?.createdAt).toLocaleDateString("es-ES")}</p>
+            <p>¿Está facturado?: {tratamiento?.isAddedToBudget ? "Sí" : "No"}</p>
             {/* Para las acciones, validamos si el tratamiento está facturado o no */}
-            {!tratamiento.isAddedToBudget && (
+            {!tratamiento?.isAddedToBudget && (
               <div>
                 <Button type='secondary' onClick={() => handleTreatmentEdit(tratamiento)}>
                   <EditFilled style={{ color: "purple" }} /> Editar

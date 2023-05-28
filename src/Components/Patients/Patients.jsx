@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { getPatients } from "../../service/patientService/patientsService";
-import { Table, Input, Button, Skeleton, Tag, Typography } from "antd";
+import { Table, Input, Button, Skeleton, Tag, Typography, Pagination } from "antd";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { PatientContext } from "../../context/PatientContext/PatientState";
+import axios from "axios";
 
 const { Search } = Input;
 const { Title } = Typography;
@@ -14,26 +14,56 @@ const Patients = () => {
   const { patientId } = useParams();
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalCount, setTotalCount] = useState(0);
+
+  const fetchData = async (page, size) => {
+    try {
+      const token = JSON.parse(localStorage.getItem("token"));
+      const res = await axios.get(`https://dental-dashboard-backend-production.up.railway.app/pacientes/todos`, {
+        params: {
+          page: page,
+          pageSize: size,
+        },
+        headers: {
+          Authorization: token,
+        },
+      });
+      console.log("soy el clg del SERVICE, ", res.data);
+      setPatients(res.data.patients);
+      setTotalCount(res.data.totalCount);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     setLoading(true);
-    getPatients("", searchText)
-      .then((res) => {
-        console.log("reeeeeeees REEEEEEEEEE", res);
-        setPatients(res);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setLoading(false);
-      });
-  }, [searchText]);
+    fetchData(currentPage, pageSize);
+  }, [searchText, currentPage, pageSize]);
+
+  const handlePageChange = (page, pageSize) => {
+    setCurrentPage(page);
+    setPageSize(pageSize);
+  };
+
+  const handleSearch = (value) => {
+    setSearchText(value);
+  };
+
+  const handlePageSizeChange = (current, size) => {
+    setCurrentPage(1);
+    setPageSize(size);
+  };
 
   const columns = [
-    { title: "Nombre", dataIndex: "displayName" , color: "blue"},
-    { title: "Email", dataIndex: "email" , color: "blue"},
+    { title: "Nombre", dataIndex: "displayName", color: "blue" },
+    { title: "Email", dataIndex: "email", color: "blue" },
     { title: "Telefono", dataIndex: "phone", color: "magenta" },
-    { title: "Direccion", dataIndex: "address" , color: "blue"},
+    { title: "Direccion", dataIndex: "address", color: "blue" },
   ];
 
   return (
@@ -44,41 +74,62 @@ const Patients = () => {
             <Skeleton active />
             <br />
             <br />
-            <Skeleton active />      
+            <Skeleton active />
             <br />
             <br />
-            <Skeleton active /> 
+            <Skeleton active />
             <br />
             <br />
-            <Skeleton active />     
+            <Skeleton active />
           </div>
         </>
       ) : (
         <>
-         <Title level={3} style={{ textAlign: "center" }}>Lista de Pacientes</Title>
-        <Table
-          pagination={{ pageSize: 20 }}
-          style={{ margin: "2rem" }}
-          dataSource={patients}
-          columns={columns?.map((column) => ({
-            ...column,
-            render: (text) => (
-              <span>
-                <Tag color={column?.color}>{text}</Tag>
-              </span>
-            ),
-          }))}
-          rowKey={(record) => record?.id}
-          onRow={(record) => ({
-            onClick: () => {
-              console.log(`click en ${record?.firstName}`);
-              // setSelectedEmployee(record);
-              navigate(`/pacientes/${record?._id}`);
-            },
-            style: { cursor: "pointer" },
-          })}
+          <Title level={3} style={{ textAlign: "center" }}>
+            Lista de Pacientes
+          </Title>
+          <Table
+            style={{ margin: "2rem" }}
+            dataSource={patients}
+            pagination={false}
+            columns={columns?.map((column) => ({
+              ...column,
+              render: (text) => (
+                <span>
+                  <Tag color={column?.color}>{text}</Tag>
+                </span>
+              ),
+            }))}
+            rowKey={(record) => record?.id}
+            onRow={(record) => ({
+              onClick: () => {
+                console.log(`click en ${record?.firstName}`);
+                navigate(`/pacientes/${record?._id}`);
+              },
+              style: { cursor: "pointer" },
+            })}
           />
-      </>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "1rem",
+            }}
+          >
+            <Pagination
+              current={currentPage}
+              pageSize={pageSize}
+              total={totalCount}
+              onChange={handlePageChange}
+              onShowSizeChange={handlePageSizeChange}
+              showSizeChanger
+              
+              pageSizeOptions={[ "10","20", "50", "100"]} // Opciones de tamaño de página disponibles
+            />
+            <br />
+            <br />
+          </div>
+        </>
       )}
     </div>
   );

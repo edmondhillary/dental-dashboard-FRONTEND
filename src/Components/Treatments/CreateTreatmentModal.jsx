@@ -34,7 +34,7 @@ const CreateTreatmentModal = ({
   patientInfo,
 }) => {
   const [form] = Form.useForm();
-  const { treatments, treatment, getTreatmentsByQuery, createTreatment } =
+  const { treatments,  createTreatment } =
     useContext(TreatmentsContext);
   const [discountEnabled, setDiscountEnabled] = useState(false);
   const [selectedTreatment, setSelectedTreatment] = useState(null);

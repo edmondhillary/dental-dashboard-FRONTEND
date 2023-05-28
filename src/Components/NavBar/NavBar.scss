@@ -43,7 +43,8 @@
     align-items: center;
     // padding-left: 5px;
     width: 75%;
-    height: 45px;
+    height: 11%;
+    padding: 0.1rem;
     transition: all 0.8s;
     border-radius: 1rem;
     font-size: 21px;
@@ -117,6 +118,9 @@
 
 .navbar,
 .container-nav {
+
+  max-height: 100vh;
+  overflow-x: scroll ;
   cursor: pointer !important;
 
   & > * {

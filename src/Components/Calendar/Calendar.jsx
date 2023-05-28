@@ -199,12 +199,13 @@ const Calendar = ({ userData, patientData, userType }) => {
       <div
         style={{
           backgroundColor: color,
-          height: "60%",
+          height: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          borderRadius: "4px",
-          padding: "5px",
+          // borderRadius: "4px",
+          // wordWrap: 'break-word',
+          margin: "2rem",
           flexDirection: "column",
         }}
       >
@@ -395,9 +396,10 @@ const Calendar = ({ userData, patientData, userType }) => {
   return (
     <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl'>
       <ScheduleComponent
+    
         onActionBegin={onActionBegin}
         style={{ margin: "2rem" }}
-        height='850px'
+        height='950px'
         eventSettings={{
           template: eventTemplate,
           dataSource: appointmentEvents,
@@ -405,6 +407,12 @@ const Calendar = ({ userData, patientData, userType }) => {
           allowDeleting: true,
           editFollowingEvents: false,
           popupOpen: handlePopupOpen,
+          popupSettings: {
+            // Estilos CSS personalizados para el pop-up
+            cssClass: 'custom-popup',
+            height: '300px', // Ajusta la altura según tus necesidades
+            width: '300px', // Ajusta el ancho según tus necesidades
+          },
         }}
         eventRendered={eventRendered}
         cssClass='custom-class'
@@ -430,7 +438,7 @@ const Calendar = ({ userData, patientData, userType }) => {
         <p>
           <Link to={`/pacientes/${selectedAppointment?.patientId}`}>
             <Tag color='green'>
-              {`Paceinte: ${selectedAppointment?.patient}`}
+              {`Paciente: ${selectedAppointment?.patient}`}
             </Tag>
           </Link>
         </p>
@@ -456,7 +464,7 @@ const Calendar = ({ userData, patientData, userType }) => {
             selectedAppointment?.StartTime
           )
             .locale("es")
-            .format("dddd, D/M/YY [a las] h:mm a")}`}</Tag>
+            .format(" D/M/YY [a las] h:mm a")}`}</Tag>
         </p>
         <br />
 

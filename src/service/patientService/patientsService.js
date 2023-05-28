@@ -3,19 +3,23 @@ import axios from "axios";
 
 const URL = "https://dental-dashboard-backend-production.up.railway.app";
 
-export const getPatients = async (firstName, lastName) => {
+export const getPatients = async (page, pageSize) => {
   const token = JSON.parse(localStorage.getItem("token"));
-  const res = await axios.get(
-    `${URL}/pacientes?firstName=${firstName}&lastName=${lastName}`,
-    {
-      headers: {
-        Authorization: token,
-      },
-    }
-  );
+
+  const res = await axios.get(`${URL}/pacientes/todos`, {
+    params: {
+      page: page,
+      pageSize: pageSize,
+    },
+    headers: {
+      Authorization: token,
+    },
+  });
+
   console.log("soy el clg del SERVICE, ", res.data);
   return res.data;
 };
+
 
 export const createPatient = async (patient) => {
   try {
@@ -27,7 +31,7 @@ export const createPatient = async (patient) => {
     });
     return res.data;
   } catch (error) {
-    const errorMessage = error.response.data
+    const errorMessage = error.response.data;
     if (error.response.data) {
       Modal.error({
         title: "Error: ",

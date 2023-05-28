@@ -27,7 +27,7 @@ export const NavBar = () => {
   const isAdmin = user?.role === "admin";
 
   return (
-    <div>
+    <div >
       <Button
         className='stickyButton'
         type='secondary'
@@ -54,6 +54,7 @@ export const NavBar = () => {
         title={
           <div
             style={{
+              
               width: "100%",
               display: "flex",
               justifyContent: "center",
@@ -65,12 +66,13 @@ export const NavBar = () => {
             <img src={imgLogo} alt='logo' style={{position: 'fixed', width: "15%", left: '10rem' }} />
           </div>
         }
-        style={{ background: "#fff", cursor: "pointer" }}
+        style={{ background: "#fff", cursor: "pointer",
+        }}
         placement='left'
         onClose={() => setVisible(false)}
         open={visible}
         breakpoint='md'
-        drawerStyle={{ width: "80%", maxWidth: "300px" }}
+        drawerStyle={{ width: "80%", maxWidth: "300px", maxHeight: '100vh', overflow: 'auto' }}
       >
         <h4 style={{ color: "gray" }}>
           {` ${new Date().toLocaleDateString("es-ES", {
