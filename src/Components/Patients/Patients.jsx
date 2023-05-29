@@ -7,6 +7,7 @@ import axios from "axios";
 
 const { Search } = Input;
 const { Title } = Typography;
+
 const Patients = () => {
   const navigate = useNavigate();
   const { patient } = useContext(PatientContext);
@@ -30,8 +31,18 @@ const Patients = () => {
           Authorization: token,
         },
       });
-      console.log("soy el clg del SERVICE, ", res.data);
-      setPatients(res.data.patients);
+  
+      // Formatear nombres y apellidos en mayúsculas
+      const formattedPatients = res.data.patients.map(patient => {
+        return {
+          ...patient,
+          firstName: patient.firstName.charAt(0).toUpperCase() + patient.firstName.slice(1),
+          lastName: patient.lastName.charAt(0).toUpperCase() + patient.lastName.slice(1),
+        };
+      });
+  
+      console.log("soy el clg del SERVICE, ", formattedPatients);
+      setPatients(formattedPatients);
       setTotalCount(res.data.totalCount);
     } catch (error) {
       console.error(error);
@@ -39,6 +50,7 @@ const Patients = () => {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     setLoading(true);
@@ -59,8 +71,25 @@ const Patients = () => {
     setPageSize(size);
   };
 
+  const capitalize = (text) => {
+    if (typeof text !== "string") return "";
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  };
+
   const columns = [
-    { title: "Nombre", dataIndex: "displayName", color: "blue" },
+    { 
+      title: "Nombre", 
+      dataIndex: "firstName", 
+      color: "blue",
+      render: (text) => <span style={{ 
+        textTransform: "capitalize" }}>{text}</span>
+    },
+    { 
+      title: "Apellidos", 
+      dataIndex: "lastName" || "secondName", 
+      color: "blue",
+      render: (text) => <span style={{ textTransform: "capitalize" }}>{text}</span>
+    },
     { title: "Email", dataIndex: "email", color: "blue" },
     { title: "Telefono", dataIndex: "phone", color: "magenta" },
     { title: "Direccion", dataIndex: "address", color: "blue" },
@@ -123,8 +152,7 @@ const Patients = () => {
               onChange={handlePageChange}
               onShowSizeChange={handlePageSizeChange}
               showSizeChanger
-              
-              pageSizeOptions={[ "10","20", "50", "100"]} // Opciones de tamaño de página disponibles
+              pageSizeOptions={["10", "20", "50", "100"]} // Opciones de tamaño de página disponibles
             />
             <br />
             <br />

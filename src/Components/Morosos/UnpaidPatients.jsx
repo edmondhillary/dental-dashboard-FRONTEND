@@ -32,7 +32,15 @@ const UnpaidPatientsTable = () => {
   const columns = [
     {
       title: "Nombre",
-      dataIndex: "displayName",
+      dataIndex: "firstName",
+      key: "displayName",
+      render: (text, record) => (
+        <Link to={`/pacientes/${record?.patientId}`}>{text}</Link>
+      ),
+    },
+    {
+      title: "Apellidos",
+      dataIndex: "lastName",
       key: "displayName",
       render: (text, record) => (
         <Link to={`/pacientes/${record?.patientId}`}>{text}</Link>

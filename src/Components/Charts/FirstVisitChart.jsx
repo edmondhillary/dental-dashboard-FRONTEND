@@ -119,7 +119,9 @@ const VisitsByMonth = () => {
       <Card style={{ backgroundColor: "transparent" }}>
         <Row justify='center'>
           <Col>
-            <Tag color='seagreen'>
+          <br />
+          <br />
+                      <Tag color='seagreen'>
               <h2>
                 TOTAL NUEVAS VISITAS EN {year} - {totalYearData}
               </h2>

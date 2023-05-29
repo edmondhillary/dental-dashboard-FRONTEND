@@ -10,7 +10,9 @@ import MostCommonTreatmentsChart from "./MostCommonTto";
 const Charts = () => {
   return (
     <>
+    <br />
       <MostCommonTreatmentsChart />
+      <br />
       <br />
       <br />
       <FirstVisitsProgress />
