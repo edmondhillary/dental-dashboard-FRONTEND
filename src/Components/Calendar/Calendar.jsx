@@ -284,7 +284,12 @@ const Calendar = ({ userData, patientData, userType }) => {
     // Comprueba si la celda está en el pasado.
     if (dayjs(cellDateTime).isBefore(dayjs(), "hour")) {
       args.cancel = true;
-      return; // Si la celda está en el pasado, no hagas nada.
+      return Modal.error({
+        title: "No se puede crear cita en el PASADO",
+        content:
+          "No está permitido crear una cita en esta fecha",
+        // okText: "Entendido",
+      });; // Si la celda está en el pasado, no hagas nada.
     }
     args.cancel = true;
     setIsModalVisible(true);

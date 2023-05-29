@@ -69,12 +69,14 @@ const EmployeePatientsTable = ({ employeeId }) => {
     setPagination(pagination);
   };
 
-  const handlePaginationChange = (page, pageSize) => {
-    setPagination({
+  const handlePaginationChange =  (page, pageSize) => {
+     setLoading(true)
+     setPagination({
       current: page,
       pageSize: pageSize,
-      total: pagination.total,
+      total: pagination?.total,
     });
+   
   };
 
   const pageSizeOptions = ["10", "20", "50"];
@@ -110,9 +112,9 @@ const EmployeePatientsTable = ({ employeeId }) => {
 
         <Pagination
           style={{ textAlign: "right", marginTop: "1rem" }}
-          current={pagination.current}
-          pageSize={pagination.pageSize}
-          total={pagination.total}
+          current={pagination?.current}
+          pageSize={pagination?.pageSize}
+          total={pagination?.total}
           onChange={handlePaginationChange}
           //   showTotal={(total) => `Total ${total} pacientes`}
           showSizeChanger={false}

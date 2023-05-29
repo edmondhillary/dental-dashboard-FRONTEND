@@ -409,7 +409,10 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
         current={pageNumber}
         total={total * 15}
         pageSize={15}
-        onChange={(page) => setPageNumber(page)}
+        onChange={(page) => {
+          setLoading(true);
+          setPageNumber(page)
+        }}
       />
       </Spin>
       <Modal
