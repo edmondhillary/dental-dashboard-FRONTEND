@@ -3,13 +3,13 @@ import { Table, Tag, Switch, Modal, InputNumber, Select, Button, Typography, Spi
 import { getBudgetsByPatient } from "../../service/budgetsService/budgetService";
 import { getBudgetsByEmployee } from "../../service/budgetsService/budgetService";
 import { Link } from "react-router-dom";
-import { CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, EditOutlined, LoadingOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { GlobalContext } from "../../context/UserContext/UsersState";
 
 const { Text } = Typography;
 
-const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
+const BudgetList = ({ id, isPatient, patientData, setPatientData , createBudgetVisible}) => {
   const { user } = useContext(GlobalContext);
   const [budgets, setBudgets] = useState([]);
   const [sortedInfo, setSortedInfo] = useState({});
@@ -33,16 +33,12 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
             response = await getBudgetsByEmployee(id, pageNumber);
           }
         }
-        console.log('soy la PETICIOOOOON!!!');
         const sortedBudgets = response?.budgets?.sort(
           (a, b) => new Date(b?.createdAt) - new Date(a?.createdAt)
-          );
-          setBudgets(sortedBudgets);
-          console.log(response?.totalPages )
-          
-          setTotal(response?.totalPages );
-
-        setLoading(false)
+        );
+        setBudgets(sortedBudgets);
+        setTotal(response?.totalPages);
+        setLoading(false);
       } catch (error) {
         console.error(error);
         setLoading(false);
@@ -50,7 +46,7 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
     };
 
     loadBudgets();
-  }, [id, isPatient, patientData, modalVisible, pageNumber]);
+  }, [id, isPatient, patientData, pageNumber, createBudgetVisible]);
 
   const handleChange = (pagination, filters, sorter) => {
     setSortedInfo(sorter);
@@ -165,10 +161,8 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
           },
         }
       );
-      console.log(response.data);
 
-      // Actualizar el presupuesto correspondiente en la lista de presupuestos en memoria
-      const updatedBudgets = budgets.map((budget) =>
+      const updatedBudgets = budgets?.map((budget) =>
         budget._id === editingBudget._id
           ? { ...budget, treatment: editingBudget.treatment, discount }
           : budget
@@ -191,6 +185,9 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
       onOk() {
         deleteBudget(budgetId);
       },
+      cancelText: "Cancelar",
+      okText: 'Aceptar',
+      
     });
   };
   const deleteBudget = async (budgetId) => {
@@ -235,9 +232,9 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
         return (
           <>
             {record?.treatment?.map((t, i) => (
-              <Tag color='magenta' key={i}>
+              <p>
                 {t.type}
-              </Tag>
+              </p>
             ))}
           </>
         );
@@ -275,7 +272,7 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
     {
       title: "Costo con Descuento aplicado",
       dataIndex: "costWithDiscount",
-      render: (cost) =><Tag >{cost?.toFixed(2)} €</Tag> 
+      render: (cost) =><Tag color="white" style={{color:'black'}}  >{cost?.toFixed(2)} €</Tag> 
     },
 
     {
@@ -303,7 +300,7 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
       title: "Pago Completo",
       dataIndex: "isPaidCompleted",
       render: (isPaidCompleted, record) => {
-        const color = isPaidCompleted ? "green" : "red";
+        const color = isPaidCompleted ? "#85ff89" : "red";
         return (
           <Switch
             checkedChildren={<CheckCircleOutlined />}
@@ -345,7 +342,8 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
           )}
           {user?.role === "superAdmin" && ( // verificar si el rol es "superAdmin"
             <Button
-              type='secondary'
+            style={{ color: "red", background:'tomato' }}
+              // type='secondary'
               size='small'
               onClick={() => handleDeleteBudget(record._id)}
             >
@@ -359,67 +357,38 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
 
   return (
     <>
-      <Spin spinning={loading}>
-      <Table
-      style={{
-        margin: '3rem'
-      }}
-        pagination={false}
-        columns={columns}
-        dataSource={budgets}
-        onChange={handleChange}
-        rowKey={(record) => record._id}
-      
-        summary={(pageData) => {
-      
-          let totalCostWithDiscount = 0;
-          let totalPaid = 0;
-          let totalDebt = 0;
-  
-          pageData?.forEach(({ borrow, repayment, costWithDiscount, paid }) => {
-            
-            totalCostWithDiscount += costWithDiscount;
-            totalPaid += paid;
-            totalDebt += costWithDiscount - paid;
-          });
-  
-          return (
-            <>
-              <Table.Summary.Row>
-                <Table.Summary.Cell index={0}>TOTALES: </Table.Summary.Cell>
-                <Table.Summary.Cell index={1}>
-                </Table.Summary.Cell>
-                <Table.Summary.Cell index={2}>
-                  <Tag>{totalCostWithDiscount} €</Tag>
-                </Table.Summary.Cell>
-                <Table.Summary.Cell index={3}>
-                  <Tag color="purple">{totalPaid} €</Tag>
-                </Table.Summary.Cell>
-                <Table.Summary.Cell index={4}>
-                  <Tag  color="red">{totalDebt} €</Tag>
-                </Table.Summary.Cell>
-              </Table.Summary.Row>
-            </>
-          );
-        }}
-      />
-      {console.log({total})}
-       <Pagination
-        style={{ textAlign: 'right', marginTop: '1rem' }}
-        current={pageNumber}
-        total={total * 15}
-        pageSize={15}
-        onChange={(page) => {
-          setLoading(true);
-          setPageNumber(page)
-        }}
-      />
+      <Spin spinning={loading} indicator={<LoadingOutlined spin />}>
+        {budgets.length > 0 ? (
+          <Table
+            style={{ margin: '3rem' }}
+            pagination={false}
+            columns={columns}
+            dataSource={budgets}
+            onChange={handleChange}
+            rowKey={(record) => record._id}
+            summary={(pageData) => {
+              // Resto de la función summary...
+            }}
+          />
+        ) : null}
+        <Pagination
+          style={{ textAlign: "right", margin: "2rem" }}
+          current={pageNumber}
+          total={total * 15}
+          pageSize={15}
+          onChange={(page) => {
+            setLoading(true);
+            setPageNumber(page);
+          }}
+        />
       </Spin>
       <Modal
-        title='Editar Presupuesto'
+        title="Editar Presupuesto"
         open={modalVisible}
         onCancel={() => setModalVisible(false)}
         onOk={handleUpdateBudget}
+        cancelText="Cancelar"
+        okText="Aceptar"
       >
         {editingBudget && (
           <>
@@ -427,9 +396,9 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
               <b>Tratamientos:</b>
             </p>
             <Select
-              mode='multiple'
+              mode="multiple"
               style={{ width: "100%" }}
-              placeholder='Seleccione los tratamientos'
+              placeholder="Seleccione los tratamientos"
               defaultValue={editingBudget?.treatment.map((t) => t.type)}
               onChange={(value) =>
                 setEditingBudget({ ...editingBudget, treatment: value })
@@ -448,7 +417,6 @@ const BudgetList = ({ id, isPatient, patientData, setPatientData }) => {
             <InputNumber
               style={{ width: "100%" }}
               min={0}
-           
               onChange={(value) =>
                 setEditingBudget({ ...editingBudget, paid: value })
               }

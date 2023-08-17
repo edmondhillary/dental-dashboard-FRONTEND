@@ -1,13 +1,13 @@
 import { Button, Modal, Form, Input, Select, Row, Col } from "antd";
 import { useContext, useEffect } from 'react';
 import { ProfileContext } from '../../Profile';
-
+import './EditUser.scss'
 
 import { GlobalContext } from '../../../../context/UserContext/UsersState';
 
 
 export function EditUserForm({ setModalOpen }) {
-  const { logOut, editUser, deleteUser, getUserInfo } = useContext(GlobalContext);
+  const { logOut, editUser, deleteUser, getUserInfo, user } = useContext(GlobalContext);
   const { userData, setUserData } = useContext(ProfileContext);
   const [form] = Form.useForm();
   
@@ -32,7 +32,7 @@ export function EditUserForm({ setModalOpen }) {
 
   const onDelete = () => {
     async function deleteUserById() {
-      const res = await deleteUser(userData._id);
+      const res = await deleteUser(userData?._id);
       if (res) logOut();
     }
     Modal.confirm({
@@ -47,15 +47,14 @@ export function EditUserForm({ setModalOpen }) {
   };
 
   return (
-    <Form form={form} onFinish={onFinish}>
-      <Row gutter={[16, 16]}>
-
+    <Form form={form} onFinish={onFinish} style={{margin:'1rem', }}>
+      <Row gutter={[16, 16]} style={{ display:'flex' , alignItems:'center', width:'1050px'}}>
         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-          <Form.Item label='Name' name='firstName'>
+          <Form.Item label='Nombre' name='firstName'>
             <Input placeholder='Edit your name' />
           </Form.Item>
-          <Form.Item label='Last Name' name='lastName'>
-            <Input placeholder='Edit your lastname' />
+          <Form.Item label='Apellidos' name='lastName'>
+            <Input placeholder='Edita tus apellidos' />
           </Form.Item>
           <Form.Item label='Genero' name='gender'>
             <Input placeholder='Genero' />
@@ -75,19 +74,30 @@ export function EditUserForm({ setModalOpen }) {
         </Col>
       </Row>
       <Form.Item>
-        <Button
-          type='primary'
-          style={{ background: '#F23F42' }}
+        <span style={{display:'flex', justifyContent:'space-evenly', alignItems:'center'}}>
+
+       {user?.role === "superAdmin" ?  (<Button
+          className="button-edit"
+          type='danger'
+          style={{ background: 'tomato', margin:'1rem' }}
           onClick={() => onDelete(userData?._id)}
-        >
-          Delete account
-        </Button>
+          >
+      
+
+          Borrar Empleado
+
+        
+        </Button>) : null
+
+       }
         <Button
-          type='primary'
-          htmlType='submit'
-        >
-          Update info
+         style={{  margin:'1rem' }}
+         type='primary'
+         htmlType='submit'
+         >
+          Actualizar
         </Button>
+          </span>
       </Form.Item>
     </Form>
   )

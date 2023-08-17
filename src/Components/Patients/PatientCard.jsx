@@ -16,7 +16,7 @@ const PatientCard = () => {
         <Row>
           <Col xs={0} lg={1}></Col>
           <Col xs={24} lg={6} className='left-avatar'>
-            <Avatar size={180} src={ patientData?.avatar || "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" } />
+            <Avatar size={180} src={ patientData?.avatar||'https://cdn-icons-png.flaticon.com/512/1053/1053244.png'} />
           </Col>
           <Col xs={22} lg={14} className='right-info'>
             <Row justify='space-between'>
@@ -25,7 +25,7 @@ const PatientCard = () => {
             <Row>
               <Descriptions title={
                   <span style={{display: 'flex', justifyContent: 'space-between'}}>
-                {patientData.displayName}
+                {patientData?.displayName}
                 {"  "}
                 {/* <CheckCircleTwoTone
                 style={{ fontSize: "12px" }}
@@ -67,7 +67,7 @@ const PatientCard = () => {
             <Row>
                <Descriptions >
                <Descriptions.Item label={"Alergias "}  >
-                  {<Tag style={{color: 'red'}}>{patientData?.alergias}</Tag>
+                  {<Tag style={{color: '#D3DB35', textTransform: 'uppercase', letterSpacing:'0.1rem', wordSpacing: '0.3rem'}}>{patientData?.alergias}</Tag>
                   }
                 </Descriptions.Item>
                </Descriptions>
@@ -78,7 +78,7 @@ const PatientCard = () => {
                 
                   
                <Descriptions.Item label={"Historial dental  "}>
-                  { <Tag style={{color: 'darkgreen'}}>{patientData?.historialDental}</Tag>}
+                  { <Tag style={{color: 'lightblue'}}>{patientData?.historialDental}</Tag>}
                 </Descriptions.Item>
                 </Descriptions>
             </Row>

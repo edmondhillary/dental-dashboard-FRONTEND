@@ -6,6 +6,30 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 const { Option } = Select;
 
 const VisitsByMonth = () => {
+
+  const CustomizedAxisTick = props => {
+    const { x, y, payload } = props;
+    return (
+      <g transform={`translate(${x},${y})`}>
+        <text x={0} y={0} dy={16} textAnchor="end" fill="white">
+          {payload.value}
+        </text>
+      </g>
+    );
+  };
+  
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div style={{backgroundColor: 'white', padding: '5px', border: '1px solid black'}}>
+          <p className="label" style={{color: 'black'}}>{`${label} : ${payload[0].value}`}</p>
+        </div>
+      );
+    }
+  
+    return null;
+  };
+
   const monthNames = [
     "ENERO",
     "FEBRERO",
@@ -87,6 +111,7 @@ const VisitsByMonth = () => {
           height: "70vh",
           width: "100%",
           backgroundColor: "transparent",
+          color:'white',
         }}
       >
         <span
@@ -108,12 +133,12 @@ const VisitsByMonth = () => {
           <div>Loading...</div>
         ) : (
           <BarChart width={1400} height={500} data={monthlyData}>
-            <XAxis dataKey='month' tickFormatter={(month) => month} />
-            <YAxis />
-            <Tooltip />
-            <CartesianGrid stroke='#ccc' />
-            <Bar dataKey='count' fill='#8884d8' />
-          </BarChart>
+          <XAxis dataKey='month' tick={<CustomizedAxisTick />} height={70} />
+          <YAxis />
+          <Tooltip content={<CustomTooltip />} />
+          <CartesianGrid stroke='#ccc' />
+          <Bar dataKey='count' fill='#8884d8' />
+        </BarChart>
         )}
       </Card>
       <Card style={{ backgroundColor: "transparent" }}>

@@ -40,6 +40,7 @@ flexDirection: 'column ',
 height: "70vh",
 width: "100%",
 backgroundColor: "transparent",
+color:'white'
 
     }} >
         {/* <AgeRangeChart/> */}

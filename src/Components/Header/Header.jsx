@@ -71,7 +71,7 @@ export const Header = ({size}) => {
           value={searchValue} // Establece el valor del input
           placeholder='Buscar paciente'
           enterButton='Buscar'
-          style={{ width: "65%" }}
+          style={{ width: "65%"  }}
           ref={inputRef} // Asignar la referencia al componente Input.Search
         />
       </Dropdown>

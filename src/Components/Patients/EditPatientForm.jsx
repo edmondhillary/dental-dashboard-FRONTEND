@@ -1,15 +1,40 @@
-import { Button, ConfigProvider, DatePicker, Form, Input, Select } from "antd";
-import React, { useState } from "react";
+import { Button, ConfigProvider, DatePicker, Form, Input, Modal, Select, message } from "antd";
+import React, { useContext, useState } from "react";
 import { updatePatient } from "../../service/patientService/patientsService";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 import locale from "antd/locale/es_ES";
-
+import { useNavigate } from "react-router-dom";
+import { deletePatient } from "../../service/patientService/patientsService";
+import { GlobalContext } from "../../context/UserContext/UsersState";
 const { Option } = Select;
 
 const EditPatientForm = ({ setModalOpen, patientData, setPatientData }) => {
+  const { user } = useContext(GlobalContext)
+
+  const navigate = useNavigate()
   const [form] = Form.useForm();
 
+  const onDelete = (id) => {
+
+    async function deletePatientById(id){
+      console.log(user?.role)
+      const res = await deletePatient(id)
+      message.success('Se borro el puto paciente')
+      navigate('/pacientes');
+      setModalOpen(false)
+    }
+    Modal.confirm({
+      title: "¿Está segur@ de eliminar al paciente?",
+      content: "Vas a eliminar al paciente, no se puede revocar esta acción",
+      okText: "SI",
+      okType: "danger",
+      cancelText: "NO",
+      onOk() { deletePatientById(id) },
+      onCancel() { setModalOpen(false) },
+    });
+    
+  };
   const onFinish = (values) => {
     updatePatient(patientData.id, values)
       .then((res) => {
@@ -89,16 +114,16 @@ const EditPatientForm = ({ setModalOpen, patientData, setPatientData }) => {
         <Input placeholder='Editar URL del avatar' />
       </Form.Item>
       <Form.Item>
-        <Button
-          type='primary'
-          style={{ background: "#F23F42" }}
-          onClick={() => onDelete(patientData?._id)}
-        >
-          Eliminar cuenta
-        </Button>
+      <span style={{display:'flex', justifyContent:'space-evenly', alignItems:'center'}}>
+      {user?.role === "superAdmin" || user?.role === "admin"  || user?.role === "superadmin"  ? (
+          <Button type="primary" style={{ background: "#F23F42" }} onClick={onDelete}>
+            Eliminar paciente
+          </Button>
+        ) : null}
         <Button type='primary' htmlType='submit'>
           Actualizar información
         </Button>
+          </span>
       </Form.Item>
     </Form>
   );

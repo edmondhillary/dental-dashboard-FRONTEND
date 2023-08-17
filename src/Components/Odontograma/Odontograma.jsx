@@ -1,14 +1,4 @@
-import {
-  Row,
-  Col,
-  Divider,
-  Table,
-  Tag,
-  Skeleton,
-  Spin,
-  Checkbox,
-  Button,
-} from "antd";
+import { Row, Col, Divider, Spin, Button } from "antd";
 import TableTreatments from "../Tabla/TableTreatments";
 import { useContext, useState, useEffect } from "react";
 import CreateTreatmentModal from "../Treatments/CreateTreatmentModal";
@@ -22,7 +12,8 @@ import muela484746363738 from "../../assets/muela48ok.png";
 import diente4333 from "../../assets/diente43ok.png";
 import diente42413132 from "../../assets/diente42ok.png";
 import diente1222 from "../../assets/diente12ok.png";
-import { useMediaQuery } from "react-responsive";
+// import { useMediaQuery } from "react-responsive";
+import "./odontograma.scss";
 
 function Odontograma({
   patientInfo,
@@ -30,7 +21,7 @@ function Odontograma({
   setPatientData,
   createBudgetVisible,
 }) {
-  const { user, getUserInfo } = useContext(GlobalContext);
+  const { user } = useContext(GlobalContext);
   const [selectedTooth, setSelectedTooth] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -83,57 +74,36 @@ function Odontograma({
 
   const numerosDientes = [
     18, 17, 16, 15, 14, 13, 12, 11, 21, 22, 23, 24, 25, 26, 27, 28, 48, 47, 46,
-    45, 44, 43, 42, 41, 31, 32, 33, 34, 35, 36, 37, 38,0
+    45, 44, 43, 42, 41, 31, 32, 33, 34, 35, 36, 37, 38, 0,
   ];
-  console.log("Selected tooth:", selectedTooth);
-  const isMediumScreen = useMediaQuery({ query: "(max-width: 1106px)" });
-  const isSmallScreen = useMediaQuery({ query: "(max-width: 1000px)" });
+
+  // const isMediumScreen = useMediaQuery({ query: "(max-width: 10px)" });
+  // const isSmallScreen = useMediaQuery({ query: "(max-width: 1px)" });
 
   // Luego definimos los arrays para las filas
   let row1, row2, row3, row4, row5, row6, row7, row8;
 
-  if (isSmallScreen) {
-    // 8 filas de 4 dientes cada una
-    row1 = numerosDientes.slice(0, 4);
-    row2 = numerosDientes.slice(4, 8);
-    row3 = numerosDientes.slice(8, 12);
-    row4 = numerosDientes.slice(12, 16);
-    row5 = numerosDientes.slice(16, 20);
-    row6 = numerosDientes.slice(20, 24);
-    row7 = numerosDientes.slice(24, 28);
-    row8 = numerosDientes.slice(28, 32);
-  } else if (isMediumScreen) {
-    // 4 filas de 8 dientes cada una
-    row1 = numerosDientes.slice(0, 8);
-    row2 = numerosDientes.slice(8, 16);
-    row3 = numerosDientes.slice(16, 24);
-    row4 = numerosDientes.slice(24, 32);
-    row5 = [];
-    row6 = [];
-    row7 = [];
-    row8 = [];
-  } else {
-    // 2 filas de 16 dientes cada una
+  if (toothImages) {
     row1 = numerosDientes.slice(0, 16);
     row2 = numerosDientes.slice(16, 32);
-    row3 = [];
-    row4 = [];
-    row5 = [];
-    row6 = [];
-    row7 = [];
-    row8 = [];
   }
   function renderCol(numero) {
     return (
       <Col span={1} key={numero}>
         <div style={{ position: "relative" }}>
-          <h3 style={{ display: "flex", justifyContent: "center" }}>
+          <h3
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              color: "black",
+            }}
+          >
             {numero}
           </h3>
           <br />
           <img
             style={{
-              width: "100%",
+              width: "90%",
               height: "130px",
               objectFit: "cover",
               transform: `${
@@ -163,40 +133,28 @@ function Odontograma({
   };
 
   return (
-    <div style={{ margin: "3rem" }}>
+    <div style={{ margin: "0rem" }}>
       <Spin spinning={loading}>
-        <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
-          {row1.map(renderCol)}
-        </Row>
-        <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
-          {row2.map(renderCol)}
-        </Row>
-        {isMediumScreen && (
-          <>
-            <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
-              {row3.map(renderCol)}
-            </Row>
-            <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
-              {row4.map(renderCol)}
-            </Row>
-          </>
-        )}
-        {isSmallScreen && (
-          <>
-            <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
-              {row5.map(renderCol)}
-            </Row>
-            <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
-              {row6.map(renderCol)}
-            </Row>
-            <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
-              {row7.map(renderCol)}
-            </Row>
-            <Row style={{ display: "flex", justifyContent: "space-evenly" }}>
-              {row8.map(renderCol)}
-            </Row>
-          </>
-        )}
+        <div style={{ background: "white",  margin: "1rem"  }}>
+          <Row
+            style={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              color: "black",
+            }}
+          >
+            {row1.map(renderCol)}
+          </Row>
+          <Row
+            style={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              color: "black",
+            }}
+          >
+            {row2.map(renderCol)}
+          </Row>
+        </div>
         <Divider />
 
         <div
@@ -208,24 +166,27 @@ function Odontograma({
           }}
         >
           <Button
-            type='secondary'
+            type='primary'
             onClick={handleClickCheckbox}
-            style={{ border: "2px dashed lightblue" }}
+            style={{ border: "2px  lightblue", color: "white" }}
           >
             TRATAMIENTO PARA TODA LA BOCA
           </Button>
         </div>
         <Divider />
 
-        <TableTreatments
-          createBudgetVisible={createBudgetVisible}
-          isModalVisible={isModalVisible}
-          patientInfo={patientInfo}
-          patientData={patientData}
-          setPatientData={setPatientData}
-          updatePatientData={setPatientData}
-        />
+      
+          <TableTreatments
+            createBudgetVisible={createBudgetVisible}
+            isModalVisible={isModalVisible}
+            patientInfo={patientInfo}
+            patientData={patientData}
+            setPatientData={setPatientData}
+            updatePatientData={setPatientData}
+          />
+     
       </Spin>
+
       <CreateTreatmentModal
         patientData={patientData}
         setPatientData={setPatientData}

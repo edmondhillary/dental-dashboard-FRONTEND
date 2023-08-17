@@ -75,3 +75,16 @@ export const searchByDisplayName = async (displayName) => {
   console.log(res.data);
   return res.data;
 };
+
+export const deletePatient = async (id) => {
+    const token = JSON.parse(localStorage.getItem("token"));
+    const res = await axios.delete(`${URL}/pacientes/${id}`,
+    {
+      headers: {
+        Authorization: token,
+      }
+    }
+    )
+    console.log('eliimino paciente ok ');
+    return 
+}

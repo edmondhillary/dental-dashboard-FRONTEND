@@ -9,20 +9,22 @@ export const EditUser = () => {
 
   return (
     <>
-      <Button type='primary' onClick={() => setOpen(true)}>
-        <SettingFilled />
+      <Button style={{backgroundColor:'#22344a', color: '#fff'} } onClick={() => setOpen(true)}>
+        <SettingFilled spin={true} style={{backgroundColor: "transparent", }} />
       </Button>
 
       <Modal
-        title={<h3 style={{ textAlign: 'center' }}>EDIT USER</h3>}
+      
+        title={<h3 style={{ textAlign: 'center', background:'#22344afc' }}>EDITAR USUARIO</h3>}
         open={isOpen}
         onCancel={() => setOpen(false)}
-        footer={
-          <Button onClick={() => setOpen(false)} style={{ background: 'gray' }} type='primary'>
-            Cancel
-          </Button>
-        }
-        width={800}
+        // footer={
+        //   <Button onClick={() => setOpen(false)} style={{ background: 'tomato'}} type='secondary'>
+        //     Cancelar
+        //   </Button>
+        // }
+        footer={null}
+        width={600}
       >
         <EditUserForm setModalOpen={setOpen} />
       </Modal>

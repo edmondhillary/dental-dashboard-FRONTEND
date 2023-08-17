@@ -6,6 +6,28 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 const { Option } = Select;
 
 const CitasChart = () => {
+  const CustomizedAxisTick = props => {
+    const { x, y, payload } = props;
+    return (
+      <g transform={`translate(${x},${y})`}>
+        <text x={0} y={0} dy={16} textAnchor="end" fill="white">
+          {payload.value}
+        </text>
+      </g>
+    );
+  };
+  
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div style={{backgroundColor: 'white', padding: '5px', border: '1px solid black'}}>
+          <p className="label" style={{color: 'black'}}>{`${label} : ${payload[0].value}`}</p>
+        </div>
+      );
+    }
+  
+    return null;
+  };
   const monthNames = [
     "ENERO",
     "FEBRERO",
@@ -58,6 +80,7 @@ const CitasChart = () => {
     <div style={{ width: "100vw", display: 'flex', justifyContent: 'center', alignItems: 'center',   backgroundColor: "transparent", }}>
       <Card style={{
          backgroundColor: "transparent",
+         color:'white'
       }}>
       <span
           style={{
@@ -70,9 +93,7 @@ const CitasChart = () => {
         <h3>Citas por Mes</h3>
         <Select value={year} onChange={handleYearChange}>
           <Option value={2023}>2023</Option>
-          {/* Ajusta los años según tus necesidades */}
           <Option value={2024}>2024</Option>
-          {/* Agrega más años según sea necesario */}
         </Select>
         </span>
         <BarChart width={1400} height={400} data={monthlyData}>
@@ -81,11 +102,13 @@ const CitasChart = () => {
             tickFormatter={(month) =>
               monthNames[parseInt(month.split(" / ")[0]) - 1]
             }
+            tick={<CustomizedAxisTick />}
+            height={70}
           />
           <YAxis />
-          <Tooltip />
+          <Tooltip content={<CustomTooltip />} />
           <CartesianGrid stroke='#ccc' />
-          <Bar dataKey='count' fill='rgba(198, 0, 108, 0.9)' />
+          <Bar dataKey='count' fill='rgba(198, 0, 108, 0.9)' barSize={90} />
         </BarChart>
       </Card>
     </div>

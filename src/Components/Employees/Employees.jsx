@@ -9,6 +9,7 @@ import EmployeeCard from "../EmployeeCard/EmployeeCard";
 import { UserCard } from "../Profile/components/UserCard/UserCard";
 import Column from "antd/es/table/Column";
 import { GlobalContext } from "../../context/UserContext/UsersState";
+import './Employees.scss'
 const { Title } = Typography;
 function Employees() {
   const navigate = useNavigate();
@@ -50,42 +51,55 @@ function Employees() {
   return (
     <div>
       {loading ? (
-       <>
-       <div style={{ width: "100%", margin: "3rem" }}>
-         <Skeleton active />
-       <br />
-       <br />
-         <Skeleton active />      
-         <br />
-       <br />
-         <Skeleton active /> 
-         <br />
-       <br />
-         <Skeleton active />     
-       </div>
+        <>
+          <div style={{ width: "100%", margin: "3rem" }}>
+            <Skeleton active />
+            <br />
+            <br />
+            <Skeleton active />
+            <br />
+            <br />
+            <Skeleton active />
+            <br />
+            <br />
+            <Skeleton active />
+          </div>
+        </>
+      ) : (
+        <>
+          <Title
+            level={3}
+            style={{
+              textAlign: "center",
+              background: "transparent",
+              color: "#fff",
+            }}
+          >
+            Lista de Empleados
+          </Title>
 
-       </>
-        
-      ) : (<>
-     <Title level={3} style={{ textAlign: "center" }}>Lista de Empleados</Title>
-        <Table
-        
-          pagination={{ pageSize: 8 }}
-          style={{ margin: "2rem", cursor: "pointer" }}
-          dataSource={employees}
-          columns={columns}
-          rowKey={(record) => record.id}
-          onRow={(record) => ({
-            onClick: () => {
-              if (user?.role !== "Employee") {
-                setSelectedEmployee(record);
-                console.log(record._id)
-                navigate(`/profile/${record?._id}`);
-              }
-            },
-          })}
+          <Table
+            pagination={{ pageSize: 8 }}
+            style={{
+              margin: "2rem",
+              cursor: "pointer",
+              backgroundColor: "transparent",
+            }}
+            className='custom-table'
+            dataSource={employees}
+            columns={columns}
+            rowKey={(record) => record.id}
+            onRow={(record) => ({
+              onClick: () => {
+                if (user?.role !== "Employee") {
+                  setSelectedEmployee(record);
+                  console.log(record._id);
+                  navigate(`/profile/${record?._id}`);
+                }
+              },
+            })}
           ></Table>
-          </>
+        </>
       )}
     </div>
   );

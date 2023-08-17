@@ -1,5 +1,4 @@
 .card-info-container{
- 
     display: flex;
     justify-content: center;
     align-items: left;
@@ -18,12 +17,16 @@
 }
 .right-info{
    width: 55%;
+   color: aliceblue;
+
 }
 .first-line {
     text-align: left;
     display: flex;
     justify-content: space-between;
     padding: 0.5rem;
+    color: aliceblue;
+
 }
 .second-line{
     cursor: pointer;
@@ -49,3 +52,9 @@
         margin: 0.2rem;
     }
 }
+:where(.css-dev-only-do-not-override-htwhyh).ant-tag.ant-tag-has-color {
+    background: #cafaeb !important;
+    color: #333232;
+}
+ 
+  

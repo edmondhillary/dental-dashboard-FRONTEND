@@ -7,22 +7,15 @@ import {
   Input,
   Select,
   Form,
-  Card,
   Spin,
 } from "antd";
 import Column from "antd/es/table/Column";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
-import {
-  DeleteColumnOutlined,
-  DeleteOutlined,
-  EditFilled,
-} from "@ant-design/icons";
-import { deleteTreatment } from "../../service/treatmentService/treatmentService";
-import { TreatmentsContext } from "../../context/TreatmentsContext/TreatmentState";
-import { useMediaQuery } from "react-responsive";
+import { DeleteOutlined, EditFilled } from "@ant-design/icons";
+import noData from '../../assets/noData.svg'
 
 const TableTreatments = ({
   patientInfo,
@@ -32,8 +25,6 @@ const TableTreatments = ({
   updatePatientData,
   createBudgetVisible,
 }) => {
-
-
   const [tratamientos, setTratamientos] = useState([]);
   const navigate = useNavigate();
   const [editableTreatment, setEditableTreatment] = useState(null);
@@ -47,13 +38,15 @@ const TableTreatments = ({
     const fetchEmployees = async () => {
       try {
         const token = JSON.parse(localStorage.getItem("token"));
-        const response = await axios.get("https://dental-dashboard-backend-production.up.railway.app/empleados", {
-          headers: {
-            Authorization: token,
-          },
-        });
+        const response = await axios.get(
+          "https://dental-dashboard-backend-production.up.railway.app/empleados",
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
         setEmployees(response?.data);
-
       } catch (error) {
         console.log(error);
       }
@@ -74,10 +67,12 @@ const TableTreatments = ({
         );
         console.log(response?.data.treatment);
         // Asegurémonos de que cada tratamiento tenga una clave única
-        const treatedData = response?.data.treatment.map((treatment, index) => ({
-          ...treatment,
-          key: treatment._id ? treatment._id : index, // Usa el _id del tratamiento si existe, de lo contrario, usa el índice
-        }));
+        const treatedData = response?.data.treatment.map(
+          (treatment, index) => ({
+            ...treatment,
+            key: treatment._id ? treatment._id : index, // Usa el _id del tratamiento si existe, de lo contrario, usa el índice
+          })
+        );
         setTratamientos(treatedData);
         setLoading(false);
       } catch (error) {
@@ -96,6 +91,7 @@ const TableTreatments = ({
     isDeleteModalVisible,
     createBudgetVisible,
   ]);
+
   const sortTratamientos = (a, b) => {
     if (a.completed && !b.completed) {
       return 1;
@@ -107,7 +103,6 @@ const TableTreatments = ({
       return 0;
     }
   };
-
 
   const handleTreatmentUpdate = async (treatmentId, updatedFields) => {
     try {
@@ -142,7 +137,6 @@ const TableTreatments = ({
     setEditableTreatment(treatment);
     setIsModalVisibleEdit(true);
   };
-  // const [forceUpdate, setForceUpdate] = useState(false);
 
   // Agregar esta función en el componente TableTreatments
   const removeTreatmentFromState = (treatmentId) => {
@@ -181,13 +175,6 @@ const TableTreatments = ({
     }
   }
 
-  //   useEffect(() => {
-  //   if (forceUpdate) {
-  //     getTreatmentsForPatient();
-  //     setForceUpdate(false);
-  //   }
-  // }, [forceUpdate]);
-
   const showDeleteModal = (record) => {
     setCurrentTreatment(record);
     setIsDeleteModalVisible(true);
@@ -197,196 +184,174 @@ const TableTreatments = ({
     setCurrentTreatment(null);
     setIsDeleteModalVisible(false);
   };
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
-  if (isTabletOrMobile) {
-    return (
-      <>
-        {tratamientos?.sort(sortTratamientos).map((tratamiento) => (
-          <Card title={tratamiento?.teeth} key={tratamiento?._id}>
-            {/* Aquí puedes colocar el contenido de cada tarjeta */}
-            <p>Tratamiento: {tratamiento?.type}</p>
-            <p>Empleado: {tratamiento?.employee?.firstName} {tratamiento?.employee.lastName}</p>
-            <p>Completado: {tratamiento?.completed ? "Sí" : "No"}</p>
-            <p>Fecha de Creación: {new Date(tratamiento?.createdAt).toLocaleDateString("es-ES")}</p>
-            <p>¿Está facturado?: {tratamiento?.isAddedToBudget ? "Sí" : "No"}</p>
-            {/* Para las acciones, validamos si el tratamiento está facturado o no */}
-            {!tratamiento?.isAddedToBudget && (
-              <div>
-                <Button type='secondary' onClick={() => handleTreatmentEdit(tratamiento)}>
-                  <EditFilled style={{ color: "purple" }} /> Editar
-                </Button>
-                <Button type='danger' onClick={() => showDeleteModal(tratamiento)}>
-                  <DeleteOutlined style={{ color: "red" }} /> Eliminar
-                </Button>
-              </div>
-            )}
-          </Card>
-        ))}
-      </>
-    );
-    
-  }
-  
+  const CustomEmpty = () => (
+    <div>
+      <img style={{height:'180px'}} src={noData } alt='No hay datos' />
+      <p style={{color:'black', fontFamily: 'Comic Sans MS'}} >No hay ningun tratamiento a este paciente</p>
+    </div>
+  );
+
   return (
     <>
-  <Spin spinning={loading}>
-  <Table
-        dataSource={tratamientos?.sort(sortTratamientos)}
-        pagination={false}
-        style={{ marginTop: "30px", margin: "3rem" }}
-        scroll={{ x: 1000 }}
-      >
-        {/* {tratamientos.map((trat) => console.log(trat))} */}
+      <Spin spinning={loading}>
+        <Table
+          locale={{ emptyText: <CustomEmpty /> }}
+          dataSource={tratamientos?.sort(sortTratamientos)}
+          pagination={false}
+          style={{ marginTop: "30px", margin: "3rem" }}
+          // scroll={{ x: 1000 }}
+        >
+          {/* {tratamientos.map((trat) => console.log(trat))} */}
 
-        <Column title='Diente' dataIndex='teeth' key='teeth' />
-        <Column
-          title='Tratamiento'
-          dataIndex='type'
-          key='tratamientos'
-          render={(text, record) => (
-            <>
-              <Button type='link' onClick={() => handleTreatmentEdit(record)}>
-                {record?.type.toUpperCase()}
-              </Button>
-            </>
-          )}
-          sorter={(a, b) => a.type.localeCompare(b.type)}
-        />
-
-        <Column
-          title='Empleado'
-          dataIndex={["employee", `firstName`]}
-          key='employee'
-          render={(text, record) => (
-            <Link to={"/profile/" + record?.employee._id}>
-              {record.employee.firstName} {record.employee.lastName}
-            </Link>
-          )}
-          sorter={(a, b) =>
-            a.employee.lastName.localeCompare(b.employee.lastName)
-          }
-        />
-
-        <Column
-          align='center'
-          title='Completado'
-          dataIndex='completed'
-          key='completed'
-          disable
-          render={(text, record) => (
-            <Switch
-              checked={record?.completed}
-              disabled={record?.completed}
-              checkedChildren='Sí'
-              unCheckedChildren='No'
-              style={
-                record?.completed
-                  ? { backgroundColor: "#6ABC3B" }
-                  : { backgroundColor: "tomato" }
-              }
-              onChange={async (checked) => {
-                const updatedTreatment = {
-                  ...record,
-                  completed: checked,
-                };
-                await handleTreatmentUpdate(record?._id, updatedTreatment);
-              }}
-            />
-          )}
-          sorter={(a, b) => a.completed - b.completed}
-        />
-
-        <Column
-          title='Fecha de creación'
-          dataIndex='createdAt'
-          key='createdAt'
-          render={(createdAt) =>
-            new Date(createdAt).toLocaleDateString("es-ES")
-          }
-          sorter={(a, b) => new Date(b.createdAt) - new Date(a.createdAt)}
-        />
-
-        <Column
-          title='Última actualización'
-          dataIndex='updatedAt'
-          key='updatedAt'
-          render={(updatedAt) =>
-            new Date(updatedAt).toLocaleDateString("es-ES")
-          }
-        />
-        <Column
-          align='center'
-          title='¿Esta facturado?'
-          dataIndex='isAddedToBudget'
-          key='isAddedToBudget'
-          sorter={(a, b) => a.isAddedToBudget - b.isAddedToBudget}
-          render={(text, record) => (
-            <Switch
-              disabled
-              checked={record?.isAddedToBudget}
-              checkedChildren='Sí'
-              unCheckedChildren='No'
-              style={
-                record?.isAddedToBudget
-                  ? { backgroundColor: "#6ABC3B" }
-                  : { backgroundColor: "tomato" }
-              }
-              onChange={async (checked) => {
-                const updatedTreatment = {
-                  ...record,
-                  isAddedToBudget: checked,
-                };
-                await handleTreatmentUpdate(record?._id, updatedTreatment);
-              }}
-            />
-          )}
-        />
-        <Column
-          title='Acciones'
-          key='actions'
-          render={(text, record) => (
-            <span style={{ display: "flex", justifyContent: "space-evenly" }}>
-              {!record.isAddedToBudget && (
-                <Button
-                  type='secondary'
-                  onClick={() => handleTreatmentEdit(record)}
-                >
-                  <EditFilled style={{ color: "purple" }} />
+          <Column title='Diente' dataIndex='teeth' key='teeth' />
+          <Column
+            title='Tratamiento'
+            dataIndex='type'
+            key='tratamientos'
+            render={(text, record) => (
+              <>
+                <Button type='link' >
+                  {record?.type.toUpperCase()}
                 </Button>
-              )}
-              {!record.isAddedToBudget && (
-                <Button type='danger' onClick={() => showDeleteModal(record)}>
-                  <DeleteOutlined style={{ color: "red" }} />
-                </Button>
-              )}
-              <Modal
-                title='¿Estás seguro de que quieres eliminar este tratamiento?'
-                open={isDeleteModalVisible}
-                onCancel={handleDeleteModalCancel}
-                footer={[
-                  <Button key='cancel' onClick={handleDeleteModalCancel}>
-                    Cancelar
-                  </Button>,
+              </>
+            )}
+            sorter={(a, b) => a.type.localeCompare(b.type)}
+          />
+
+          <Column
+            title='Empleado'
+            dataIndex={["employee", `firstName`]}
+            key='employee'
+            render={(text, record) => (
+              <Link to={"/profile/" + record?.employee._id}>
+                {record.employee.firstName} {record.employee.lastName}
+              </Link>
+            )}
+            sorter={(a, b) =>
+              a.employee.lastName.localeCompare(b.employee.lastName)
+            }
+          />
+
+          <Column
+            align='center'
+            title='Completado'
+            dataIndex='completed'
+            key='completed'
+            disable
+            render={(text, record) => (
+              <Switch
+                checked={record?.completed}
+                disabled={record?.completed}
+                checkedChildren='Sí'
+                unCheckedChildren='No'
+                style={
+                  record?.completed
+                    ? { backgroundColor: "#6ABC3B" }
+                    : { backgroundColor: "tomato" }
+                }
+                onChange={async (checked) => {
+                  const updatedTreatment = {
+                    ...record,
+                    completed: checked,
+                  };
+                  await handleTreatmentUpdate(record?._id, updatedTreatment);
+                }}
+              />
+            )}
+            sorter={(a, b) => a.completed - b.completed}
+          />
+
+          <Column
+            title='Fecha de creación'
+            dataIndex='createdAt'
+            key='createdAt'
+            render={(createdAt) =>
+              new Date(createdAt).toLocaleDateString("es-ES")
+            }
+            sorter={(a, b) => new Date(b.createdAt) - new Date(a.createdAt)}
+          />
+
+          <Column
+            title='Última actualización'
+            dataIndex='updatedAt'
+            key='updatedAt'
+            render={(updatedAt) =>
+              new Date(updatedAt).toLocaleDateString("es-ES")
+            }
+          />
+          <Column
+            align='center'
+            title='¿Esta facturado?'
+            dataIndex='isAddedToBudget'
+            key='isAddedToBudget'
+            sorter={(a, b) => a.isAddedToBudget - b.isAddedToBudget}
+            render={(text, record) => (
+              <Switch
+                disabled
+                checked={record?.isAddedToBudget}
+                checkedChildren='Sí'
+                unCheckedChildren='No'
+                style={
+                  record?.isAddedToBudget
+                    ? { backgroundColor: "#6ABC3B" }
+                    : { backgroundColor: "tomato" }
+                }
+                onChange={async (checked) => {
+                  const updatedTreatment = {
+                    ...record,
+                    isAddedToBudget: checked,
+                  };
+                  await handleTreatmentUpdate(record?._id, updatedTreatment);
+                }}
+              />
+            )}
+          />
+          <Column
+            title='Acciones'
+            key='actions'
+            render={(text, record) => (
+              <span style={{ display: "flex", justifyContent: "space-evenly" }}>
+                {!record.isAddedToBudget && (
                   <Button
-                    key='delete'
-                    type='danger'
-                    onClick={() => {
-                      handleDeleteTreatment(currentTreatment?._id);
-                      handleDeleteModalCancel();
-                    }}
+                    type='secondary'
+                    onClick={() => handleTreatmentEdit(record)}
                   >
-                    <p style={{ color: "red" }}> Eliminar</p>
-                  </Button>,
-                ]}
-              >
-                <p>Confirma si deseas eliminar este tratamiento.</p>
-              </Modal>
-            </span>
-          )}
-        />
-      </Table>
-  </Spin>
+                    <EditFilled style={{ color: "purple" }} />
+                  </Button>
+                )}
+                {!record.isAddedToBudget && (
+                  <Button type='danger' onClick={() => showDeleteModal(record)}>
+                    <DeleteOutlined style={{ color: "red" }} />
+                  </Button>
+                )}
+                <Modal
+                  title='¿Estás seguro de que quieres eliminar este tratamiento?'
+                  open={isDeleteModalVisible}
+                  onCancel={handleDeleteModalCancel}
+                  footer={[
+                    <Button key='cancel' onClick={handleDeleteModalCancel}>
+                      Cancelar
+                    </Button>,
+                    <Button
+                      key='delete'
+                      type='danger'
+                      onClick={() => {
+                        handleDeleteTreatment(currentTreatment?._id);
+                        handleDeleteModalCancel();
+                      }}
+                    >
+                      <p style={{ color: "red" }}> Eliminar</p>
+                    </Button>,
+                  ]}
+                >
+                  <p>Confirma si deseas eliminar este tratamiento.</p>
+                </Modal>
+              </span>
+            )}
+          />
+        </Table>
+      </Spin>
       <Modal
         title='Editar tratamiento'
         open={isModalVisibleEdit}
@@ -430,6 +395,7 @@ const TableTreatments = ({
         <Form layout='vertical'>
           <Form.Item label='Diente:'>
             <Input
+            style={{color: 'white'}}
               disabled
               value={editableTreatment?.teeth}
               onChange={(e) =>
@@ -442,6 +408,7 @@ const TableTreatments = ({
           </Form.Item>
           <Form.Item label='Descripción:'>
             <Input.TextArea
+            style={{color: 'white'}}
               value={editableTreatment?.description}
               onChange={(e) =>
                 setEditableTreatment({
@@ -453,6 +420,7 @@ const TableTreatments = ({
           </Form.Item>
           <Form.Item label='Tipo de tratamiento:'>
             <Input
+            style={{color: 'white'}}
               disabled
               value={editableTreatment?.type}
               onChange={(e) => {
@@ -466,6 +434,7 @@ const TableTreatments = ({
           </Form.Item>
           <Form.Item label='Costo:'>
             <Input
+            style={{color: 'white'}}
               disabled
               type='number'
               value={editableTreatment?.cost}
@@ -479,6 +448,7 @@ const TableTreatments = ({
           </Form.Item>
           <Form.Item label='Descuento:'>
             <Input
+            style={{color: 'white'}}
               type='number'
               value={editableTreatment?.discount}
               onChange={(e) =>
@@ -498,7 +468,8 @@ const TableTreatments = ({
           </Form.Item>
           <Form.Item label='Empleado:'>
             <Select
-              style={{ width: "100%" }}
+            style={{color: 'white', width: "100%" }}
+              
               value={editableTreatment?.employee?._id}
               onChange={(value) =>
                 setEditableTreatment({

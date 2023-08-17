@@ -92,7 +92,7 @@ const PatientProfile = () => {
           <PatientCard />
           <Divider />
           <PatientsTabs />
-          {/* <Odontograma/> */}{" "}
+          {/* <Odontograma/>{" "} */}
           <>
           <Tooltip title='Crear Factura'>
 

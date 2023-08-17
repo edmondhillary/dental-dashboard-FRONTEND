@@ -5,9 +5,9 @@ const { Search } = Input;
 const TreatmentTable = () => {
   const [searchText, setSearchText] = useState("");
 
-  const handleSearch = (value) => {
-    setSearchText(value);
-  };
+  // const handleSearch = (value) => {
+  //   setSearchText(value);
+  // };
 
   const filterTreatments = (treatments, searchText) => {
     return treatments.filter(
@@ -23,7 +23,8 @@ const TreatmentTable = () => {
   const generateColumns = () => {
     const columns = [
         {
-          title: <u>Tratamientos</u>,
+          title: <u style={{ textTransform: "uppercase",
+          fontWeight: "bold", color:'#fff', alignItems:'center'}}>Tratamientos</u>,
           dataIndex: "nombre",
           key: "nombre",
           render: (text, record) => {
@@ -31,7 +32,8 @@ const TreatmentTable = () => {
           },
         },
         {
-          title: <u>Precio</u>,
+          title: <u style={{ textTransform: "uppercase",
+          fontWeight: "bold", color:'#fff'}}>Precio</u>,
           dataIndex: "precio",
           key: "precio",
         },
@@ -76,10 +78,9 @@ const TreatmentTable = () => {
 
   const tableHeaderStyle = {
     background: "#D9AAF1",
-    color: "black",
-    textTransform: "uppercase",
-    fontWeight: "bold",
-    borderBottom: "2px solid #ccc",
+    color: "white",
+   
+    // borderBottom: "2px solid #ccc",
   };
 
   return (
@@ -88,29 +89,31 @@ const TreatmentTable = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        flexDirection: 'column'
+        flexDirection: 'column',
+        color:'black'
    
      }}
     >
-      <Search
+      {/* <Search
         size='large'
         placeholder='Buscar tratamiento'
         value={searchText}
         onChange={(e) => handleSearch(e.target.value)}
-        style={{ alignItems: 'center', marginBottom: 16, margin: "3rem", width: "70%"  }}
-      />
+        // style={{ alignItems: 'center', marginBottom: 16, margin: "3rem", width: "30%"  }}
+      /> */}
       <Table
+      
         columns={columns}
         dataSource={dataSource}
         pagination={false}
-        style={{ background: "#fff", margin: "3rem", width: "70%"  }}
+        style={{ background: "transparent", margin: "3rem", width: "70%" , color: "white" }}
         bordered
         size='middle'
-        components={{
-          header: {
-            cell: () => <th style={tableHeaderStyle} />,
-          },
-        }}
+        // components={{
+        //   header: {
+        //     cell: () => <th className="th-head" s />
+        //   },
+        // }}
       />
     </div>
   );

@@ -399,12 +399,12 @@ const Calendar = ({ userData, patientData, userType }) => {
 
   console.log(employees?.map((employee) => employee?._id));
   return (
-    <div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl'>
+    <div className='m-2 md:m-10 mt-24 p-2 md:p-15 bg-lightgray rounded-2xl'>
       <ScheduleComponent
     
         onActionBegin={onActionBegin}
         style={{ margin: "2rem" }}
-        height='950px'
+        height='650px'
         eventSettings={{
           template: eventTemplate,
           dataSource: appointmentEvents,
@@ -427,12 +427,12 @@ const Calendar = ({ userData, patientData, userType }) => {
         readOnly={userType === "employee"}
       >
         <ViewsDirective>
-          <ViewDirective option='Day' startHour='08:00' endHour='22:00' />
-          <ViewDirective option='WorkWeek' startHour='08:00' endHour='22:00' />
+          <ViewDirective option='Day' startHour='08:00' endHour='22:00' timeScale={{ interval: 60, slotCount: 2 }}/>
+          <ViewDirective option='WorkWeek' startHour='08:00' endHour='22:00' timeScale={{ interval: 60, slotCount: 2 }}/>
           <ViewDirective option='Month' />
           <ViewDirective option='Agenda' />
         </ViewsDirective>
-        <Inject services={[Day, WorkWeek, Month, Agenda, Resize]} />
+        <Inject services={[Day, WorkWeek, Agenda,Month, Resize]} />
       </ScheduleComponent>
       <Modal
         title='Información de la cita'

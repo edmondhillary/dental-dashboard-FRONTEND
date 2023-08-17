@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Table, Switch, Spin, Divider } from "antd"; // Asegúrate de importar Spin
+import { Table, Switch, Spin, Divider, Tag } from "antd"; // Asegúrate de importar Spin
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { Pagination } from "antd";
@@ -92,12 +92,11 @@ const EmployeeTreatmentsTable = ({ employeeId }) => {
       dataIndex: "completed",
       key: "completed",
       render: (completed) => (
-        <Switch
-          checked={completed}
-          disabled
-          style={{ backgroundColor: "green" }}
-        />
+        <Tag color={completed ? "green" : "red"}>
+          {completed ? "Completado" : "Incompleto"}
+        </Tag>
       ),
+      
     },
   ];
 

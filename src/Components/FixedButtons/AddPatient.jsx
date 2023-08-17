@@ -1,5 +1,5 @@
 import { UserAddOutlined } from "@ant-design/icons";
-import { Button, Modal, Form, Input, Select, Row, Col, Checkbox } from "antd";
+import { Button, Modal, Form, Input, Select, Row, Col, Checkbox, message } from "antd";
 import React, { useState, useContext } from "react";
 import { PatientContext } from "../../context/PatientContext/PatientState";
 import axios from "axios";
@@ -14,6 +14,7 @@ const AddPatient = () => {
 
   const handleModal = () => {
     setModalVisible(!modalVisible);
+    form.resetFields();
   };
 
   const handleCheckboxChange = (e) => {
@@ -25,6 +26,7 @@ const AddPatient = () => {
       createPatient(values).then(() => {
         form.resetFields();
         setModalVisible(false);
+        message.success('Paciente creado con éxito')
       });
     });
   };
@@ -39,14 +41,21 @@ const AddPatient = () => {
           top: "2rem",
           right: "2rem",
           position: "absolute",
+          display:'flex',
+          justifyContent:'center'
         }}
       >
-        <UserAddOutlined
+       <span style={{color:'white '}}>
+         Añadir Paciente
+        </span>
+
+        <UserAddOutlined className="custom-icon" 
           style={{
             fontSize: "1.5rem",
             color: "white",
           }}
-        />
+          
+        /> 
       </Button>
       <Modal
         title='Nuevo paciente'
@@ -57,6 +66,7 @@ const AddPatient = () => {
         cancelText='Cancelar'
         width='70%'
         style={{
+        
           maxHeight: "80vh",
           display: "flex",
           justifyContent: "center",
@@ -110,8 +120,8 @@ const AddPatient = () => {
             <Form form={form}>
               <Form.Item label='Género' name='gender'>
                 <Select>
-                  <Option value='Masculino'>Masculino</Option>
-                  <Option value='Femenino'>Femenino</Option>
+                  <Option value='Masculino' className='option-gender'>Masculino</Option>
+                  <Option value='Femenino' className='option-gender'>Femenino</Option>
                 </Select>
               </Form.Item>
               <Form.Item label='Dirección' name='address'>

@@ -39,6 +39,7 @@ flexDirection: 'column ',
 height: "70vh",
 width: "100%",
 backgroundColor: "transparent",
+color:'white'
                 
             }} >
       <h3>Edad por Rango de 10 años</h3>

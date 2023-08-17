@@ -11,7 +11,10 @@ import {
   UnlockOutlined,
   BarChartOutlined,
   MoneyCollectTwoTone,
+  MenuFoldOutlined,
+
 } from "@ant-design/icons";
+
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 // import SizeContext from "antd/es/config-provider/SizeContext";
@@ -27,34 +30,41 @@ export const NavBar = () => {
   const isAdmin = user?.role === "admin";
 
   return (
-    <div >
+    <div>
       <Button
         className='stickyButton'
-        type='secondary'
+        type='primary'
         style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width:'3rem',
+          height:'3rem',
           cursor: "pointer ",
-          borderRadius: "33.3%",
-          margin: "2rem",
-          background: " #91b5b3",
-          color: "white",
-          top: "0rem",
+          borderRadius: "1rem",
+          // margin: "2rem",
+          background: " #FBC837",
+          color: "#333232",
+          top: "2rem",
           left: "2rem",
           position: "absolute",
           border: "1px solid lightgray",
-          backgroundColor: "#lightgray",
-          WebkitBoxShadow: "8px 4px 20px -1px rgba(156,126,158,0.63)",
-          boxShadow: " 8px 4px 20px -1px rgba(156,126,158,0.63)",
+     
         }}
         size='large'
         onClick={() => setVisible(true)}
       >
-        <MenuOutlined style={{ color: "white", fontWeight: "700" }} />
+    
+
+        <MenuFoldOutlined className="custom-icon"  style={{ fontSize: '26px', color: '#333232' }} />
+        
       </Button>
       <Drawer
         title={
+        <>
           <div
             style={{
-              
+              margin: "2rem",
               width: "100%",
               display: "flex",
               justifyContent: "center",
@@ -62,17 +72,19 @@ export const NavBar = () => {
               flexDirection: "row",
             }}
           >
-            <p style={{color: '#829DCB'}}>{"     Clinica Dental Lorenzo Gonzalez "}</p>
-            <img src={imgLogo} alt='logo' style={{position: 'fixed', width: "15%", left: '10rem' }} />
+            <p style={{color: '#fff'}}>{"CLINICA DENTAL LORENZO"}</p>
+            {/* <img src={imgLogo} alt='logo' style={{position: 'fixed', width: "15%", left: '10rem' }} /> */}
           </div>
+         
+        </>
         }
-        style={{ background: "#fff", cursor: "pointer",
+        style={{ background: "#35445a", cursor: "pointer",
         }}
         placement='left'
         onClose={() => setVisible(false)}
         open={visible}
         breakpoint='md'
-        drawerStyle={{ width: "80%", maxWidth: "300px", maxHeight: '100vh', overflow: 'auto' }}
+        drawerStyle={{ width: "100%", maxWidth: "500px", maxHeight: '100vh'}}
       >
         <h4 style={{ color: "gray" }}>
           {` ${new Date().toLocaleDateString("es-ES", {
@@ -175,7 +187,7 @@ export const NavBar = () => {
                     twoToneColor={"tomato"}
                     className='iconlogout'
                   />{" "}
-                  <div className='divLogout' style={{ color: "tomato" }}>
+                  <div className='divLogout' style={{ color: "#fff" }}>
                     Morosos
                   </div>
                 </div>

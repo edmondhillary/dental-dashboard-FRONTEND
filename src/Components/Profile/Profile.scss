@@ -7,6 +7,8 @@
     // flex-wrap: wrap;
     margin: 10px;
     overflow-y: scroll;
+    color: aliceblue !important;
+
 
 }
 .card-title{
@@ -42,4 +44,17 @@ width: 600px;
 .followers-list{
     display: flex;
     flex-direction: row;
+}
+.ant-descriptions , .ant-descriptions-item-label, .ant-descriptions-item-content{
+    color: #fff !important;
+}
+.ant-descriptions-item-label{
+    font-weight: bold !important;
+}
+
+.ant-descriptions-title{
+    color: rgb(116, 219, 243) !important;
+}
+.th-head{
+    color: #fff !important;
 }

@@ -24,11 +24,7 @@ const EditPatient = ({patientData, setPatientData }) => {
         title={<h3 style={{ textAlign: 'center' }}>EDITAR PACIENTE</h3>}
         open={isOpen}
         onCancel={() => setOpen(false)}
-        footer={
-          <Button onClick={() => setOpen(false)} style={{ background: 'gray' }} type='primary'>
-            Cancel
-          </Button>
-        }
+      footer={null}
         width={800}
       >
         <EditPatientForm  patientData={patientData} setPatientData={setPatientData} setModalOpen={setOpen}/>

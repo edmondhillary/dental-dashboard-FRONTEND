@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, Spin, Select, Pagination } from "antd";
 import { Link } from "react-router-dom";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const EmployeePatientsTable = ({ employeeId }) => {
   const [patients, setPatients] = useState([]);
@@ -20,8 +21,8 @@ const EmployeePatientsTable = ({ employeeId }) => {
           `https://dental-dashboard-backend-production.up.railway.app/pacientes/employee/${employeeId}`,
           {
             params: {
-              page: pagination.current,
-              pageSize: pagination.pageSize,
+              page: pagination?.current,
+              pageSize: pagination?.pageSize,
             },
             headers: {
               Authorization: token,
@@ -29,10 +30,10 @@ const EmployeePatientsTable = ({ employeeId }) => {
           }
         );
 
-        setPatients(response.data.patients);
+        setPatients(response?.data.patients);
         setPagination({
           ...pagination,
-          total: response.data.totalCount,
+          total: response?.data.totalCount,
         });
         setLoading(false);
       } catch (error) {
@@ -69,33 +70,31 @@ const EmployeePatientsTable = ({ employeeId }) => {
     setPagination(pagination);
   };
 
-  const handlePaginationChange =  (page, pageSize) => {
-     setLoading(true)
-     setPagination({
+  const handlePaginationChange = (page, pageSize) => {
+    setLoading(true);
+    setPagination((prevPagination) => ({
+      ...prevPagination,
       current: page,
       pageSize: pageSize,
-      total: pagination?.total,
-    });
-   
+    }));
   };
 
   const pageSizeOptions = ["10", "20", "50"];
 
   return (
-    <Spin spinning={loading}>
-      <Table
-        columns={columns}
-        dataSource={patients}
-        pagination={false}
-        onChange={handleTableChange}
-      />
+    <Spin spinning={loading} indicator={<LoadingOutlined spin />}>
+      {patients.length > 0 ? (
+        <Table
+  
+          columns={columns}
+          dataSource={patients}
+          pagination={false}
+          onChange={handleTableChange}
+        />
+      ) : null}
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <div style={{marginTop: "1rem", marginRight: '12rem'}}>
-          <span
-          //   style={{ marginRight: 8 }}
-          >
-            Pacientes por página:
-          </span>
+        <div style={{ marginTop: "2rem", marginRight: "12rem" }}>
+          <span>Pacientes por página:</span>
           <Select
             value={pagination.pageSize.toString()}
             onChange={(value) =>
@@ -111,15 +110,15 @@ const EmployeePatientsTable = ({ employeeId }) => {
         </div>
 
         <Pagination
-          style={{ textAlign: "right", marginTop: "1rem" }}
+          style={{ textAlign: "right", marginTop: "2rem" }}
           current={pagination?.current}
           pageSize={pagination?.pageSize}
           total={pagination?.total}
           onChange={handlePaginationChange}
-          //   showTotal={(total) => `Total ${total} pacientes`}
           showSizeChanger={false}
         />
         <br />
+        <span       style={{margin:'3rem'}}></span>
       </div>
     </Spin>
   );

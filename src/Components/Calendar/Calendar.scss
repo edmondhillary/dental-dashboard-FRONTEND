@@ -17,7 +17,7 @@
   
   .custom-class .e-schedule .e-quick-popup-wrapper .e-content {
     max-height: 400px!important ; /* Ajusta la altura máxima según tus necesidades */
-    width: 400px !important; /* Ajusta el ancho según tus necesidades */
+    width: 100px !important; /* Ajusta el ancho según tus necesidades */
   }
   .e-more-popup-wrapper{
     max-height: 1000px !important; /* Ajusta la altura máxima según tus necesidades */
@@ -52,3 +52,7 @@ color: white !important;;
     background: transparent !important;
     color: white !important;;
       }
+
+   .ant-card-bordered {
+    border: 0px !important
+   }

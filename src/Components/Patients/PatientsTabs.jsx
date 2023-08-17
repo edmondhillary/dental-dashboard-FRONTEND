@@ -8,15 +8,14 @@ import AppointmentForm from "../Appointments/AppointmentForm";
 import Calendar from "../Calendar/Calendar";
 import { GlobalContext } from "../../context/UserContext/UsersState";
 
-
 const PatientsTabs = () => {
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const { patientData, setPatientData, createBudgetVisible } = useContext(
     PatientProfileContext
   );
 
   const { user } = useContext(GlobalContext);
-  
+
   const isEmployee = user?.role === "Employee";
 
   // Creando una lista condicional de items para las pestañas
@@ -32,7 +31,7 @@ const PatientsTabs = () => {
           patientData={patientData}
         />
       ),
-    }
+    },
   ];
 
   // Si el usuario no es un empleado, agregamos la pestaña de facturación
@@ -42,6 +41,7 @@ const PatientsTabs = () => {
       key: "2",
       children: (
         <BudgetList
+          createBudgetVisible={createBudgetVisible}
           id={patientData?._id}
           isPatient={true}
           setPatientData={setPatientData}
@@ -57,7 +57,7 @@ const PatientsTabs = () => {
     key: "3",
     children: (
       <>
-        <Calendar patientData={patientData} userType="patient" />
+        <Calendar patientData={patientData} userType='patient' />
       </>
     ),
   });

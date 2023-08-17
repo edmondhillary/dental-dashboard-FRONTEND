@@ -1,14 +1,16 @@
-import { Divider } from "antd";
+import { Divider, Spin } from "antd";
 import { useContext, useEffect, useState, createContext } from "react";
 import { useParams, useNavigate } from "react-router";
 import { UserCard } from "./components/UserCard/UserCard";
-import { Spin } from "antd";
 import "./Profile.scss";
 import { GlobalContext } from "../../context/UserContext/UsersState";
 import { getEmployeeByID } from "../../service/employeService/employeeService";
 import MyTabs from "../MyTabs/MyTabs";
+import { LoadingOutlined } from '@ant-design/icons';
 
 export const ProfileContext = createContext();
+
+const loadingIcon = <LoadingOutlined style={{ fontSize: 54 , fontWeight:'700'}} spin />;
 
 export const Profile = () => {
   const { user, getUserInfo } = useContext(GlobalContext);
@@ -34,14 +36,16 @@ export const Profile = () => {
   }, [userId]);
 
   return (
-    <ProfileContext.Provider value={{ userData, setUserData }}>
-      <Spin spinning={isLoading}>
+    isLoading
+    ? <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', height: '100vh' , margin:'12rem'}}>
+        <Spin indicator={loadingIcon} />
+      </div>
+    : <ProfileContext.Provider value={{ userData, setUserData }}>
         <div className='profile-container'>
           <UserCard />
           <Divider plain />
           <MyTabs />
         </div>
-      </Spin>
-    </ProfileContext.Provider>
+      </ProfileContext.Provider>
   );
 };

@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Spin, Table } from "antd";
 import { Link } from "react-router-dom";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const UnpaidPatientsTable = () => {
   const [patients, setPatients] = useState([]);
-    const [loading,setLoading] = useState(true);
+  const [loading,setLoading] = useState(true);
+  
   useEffect(() => {
     const fetchUnpaidPatients = async () => {
       try {
@@ -63,13 +65,21 @@ const UnpaidPatientsTable = () => {
       render: (debt) => `$${debt.toFixed(2)}`,
     },
   ];
+  const loadingIcon = <LoadingOutlined style={{ fontSize: 44 }} spin />;
 
   return (
-    <Spin spinning={loading}>
-
-    <Table pagination={{ pageSize: 25 }} style={{ margin: "3rem" }} columns={columns} dataSource={patients} />
-    </Spin>
+    loading 
+      ? <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', height: '100vh', marginTop:'6rem' }}>
+          <Spin indicator={loadingIcon} />
+        </div>
+      : <Table 
+          pagination={{ pageSize: 25 }} 
+          style={{ margin: "3rem" }} 
+          columns={columns} 
+          dataSource={patients} 
+        />
   );
+  
 };
 
 export default UnpaidPatientsTable;

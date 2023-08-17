@@ -40,11 +40,13 @@ const MonthlyPaymentsChart = () => {
         }
       );
       console.log({ response });
-      setMonthlyPayments(response?.data);
+      const sortedData = response?.data.sort((a, b) => b.mes - a.mes);
+      setMonthlyPayments(sortedData);
     } catch (error) {
       console.error(error);
     }
   };
+
 
   const handleTabChange = (key) => {
     setSelectedYear(parseInt(key));
